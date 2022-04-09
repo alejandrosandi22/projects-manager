@@ -4,7 +4,7 @@ import { colors } from "styles/styles";
 const SocialSignin = () => {
   return (
     <>
-      <button onClick={() => signIn('google')} className="fab fa-google"></button>
+      <button onClick={() => signIn()} className="fab fa-google"></button>
       <button onClick={() => signIn('facebook')} className="fab fa-facebook"></button>
       <button onClick={() => signIn('github')} className="fab fa-github"></button>
 

@@ -4,11 +4,21 @@ import Switch from "components/switch/switch";
 import Link from 'next/link'
 import SocialSignin from "components/socialSignIn/socialSignIn";
 import Input from "components/input/input";
+import { useState } from "react";
 
 const Signup = () => {
 
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    fetch('/api/register', {
+      method: 'POST',
+      body: {email, password},
+      headers: {'Content-Type': 'application/json'}
+    })
   }
 
   return (
@@ -24,10 +34,10 @@ const Signup = () => {
             <Input type="text" label="Last Name" id="lastName"/>
           </div>
           <div className="email-wrapper">
-            <Input type="email" label="Email" id="email"/>
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" label="Email" id="email"/>
           </div>
           <div>
-            <Input type="password" label="Password" id="password"/>
+            <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" label="Password" id="password"/>
             <Input type="password" label="Confirm Password" id="confirmPassword"/>
           </div>
           <span>

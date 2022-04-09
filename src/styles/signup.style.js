@@ -24,6 +24,7 @@ export const signUpStyle = css`
     background: ${colors.primary};
     box-shadow: .2rem .2rem .5rem ${colors.darkShadow},
     -.2rem -.2rem .5rem ${colors.lightShadow};
+    overflow: hidden;
     h2 {
       text-transform: uppercase;
       font-size: 2rem;
@@ -88,11 +89,7 @@ export const signUpStyle = css`
   @media (max-width: 1024px) {
     section {
       width: 100%;
-      min-height: 100%;
-      form {
-        grid-template-columns: 50 50%;
-        grid-template-rows: 70% 30%;
-      }
+      height: 100%;
     }
   }
   @media (max-height: 500px) {

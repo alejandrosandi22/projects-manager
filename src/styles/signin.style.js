@@ -95,5 +95,4 @@ export const signInStyle = css`
       height: 500px;
     }
   }
-
 `

@@ -3,6 +3,7 @@ import Switch from "components/switch/switch";
 import Link from 'next/link'
 import SocialSignin from "components/socialSignIn/socialSignIn";
 import Input from "components/input/input";
+import { getSession } from "next-auth/react";
 
 export default function SignIn() {
 
@@ -17,7 +18,7 @@ export default function SignIn() {
     </div>
       <section>
         <h2>Sign In</h2>
-        <form>
+        <form method="POST" action="/api/auth/signin/email">
           <Input type="email" label="Email" id="email"/>
           <Input type="password" label="Password" id="password"/>
           <button onSubmit={handleSubmit}>Sign In</button>
@@ -39,4 +40,21 @@ export default function SignIn() {
       <style jsx>{signInStyle}</style>
     </>
   );
+}
+
+export const getServerSideProps= async (context) => {
+  const session = await getSession(context);
+
+  if (session) return {
+    redirect: {
+      destination: '/dashboard',
+      permanent: false
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
 }
