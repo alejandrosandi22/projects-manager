@@ -5,7 +5,7 @@ const Input = (props) => {
     <>
     <div>
       <label htmlFor={props.id}>{props.label}</label>
-      <input type={props.type} id={props.id} />
+      <input onChange={props.onChange} value={props.value} type={props.type} id={props.id} />
     </div>
 
       <style jsx>

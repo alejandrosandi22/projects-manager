@@ -1,7 +1,14 @@
 import Head from 'next/head';
 import globals from 'styles/globals';
+import { SessionProvider } from 'next-auth/react';
+import Nav from 'components/nav/nav';
+import { useRouter } from 'next/router';
+      
+function MyApp({ session, Component, pageProps }) {
 
-function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const { pathname } = router;
+
 
   return(
     <>
@@ -14,7 +21,18 @@ function MyApp({ Component, pageProps }) {
         <title>Projects</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
+
+      {
+        pathname !== '/signin'
+        && pathname !== '/signup'
+        && pathname !== '/recovery'
+        && pathname !== '/' && <Nav />
+      }
+
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+      
       <style jsx global>{globals}</style>
     </>
   );

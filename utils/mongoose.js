@@ -7,11 +7,13 @@ const conn = {
 export async function dbConnect() {
   if (conn.isConnected) return;
 
-  const db = await connect(process.env.MONGODB_URL);
+  const db = await connect(process.env.MONGODB_URI);
   conn.isConnected = db.connections[0].readyState;
 }
 
 connection.on("connected", () => {
   console.log('mongodb is connected')
 });
-connection.on("error", (err) => console.log('Error',err));
+connection.on("error", (err) => {
+  console.log('Error',err)
+});
