@@ -7,12 +7,11 @@ const Switch = () => {
 
   const { changeTheme, theme} = useContext(ThemeContext);
 
-  const [ mode, setMode ] = useState('light-mode');
-  const [ checked, setChecked ] = useLocalStorage('cheked', false);
+  const [ mode, setMode ] = useState('lightMode');
   const themeToggle = useRef(<input/>);
   
   useEffect(() => {
-    if (checked) {
+    if (theme) {
       themeToggle.current.checked = true;
       setMode('darkMode');
     }
@@ -25,7 +24,6 @@ const Switch = () => {
   return (
     <>
       <input className={`${styles.input} ${styles[mode]}`} ref={themeToggle} onChange={(e) => {
-            setChecked(e.target.checked);
             changeTheme();
           }} type="checkbox"/>
 
