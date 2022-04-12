@@ -1,15 +1,17 @@
-import signInStyle from 'styles/signin.style';
-import Switch from 'components/switch/switch';
-import Link from 'next/link'
-import SocialSignin from 'components/socialSignIn/socialSignIn';
-import Input from 'components/input/input';
-import axios from 'axios';
-import Alerts from 'components/alerts/alerts';
 import { useState } from 'react';
-import { getSession } from 'next-auth/react';
-import { setCookies } from 'cookies-next';
 import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
+import Link from 'next/link'
+import styles from 'styles/signin.module.scss';
+
+import Switch from 'components/switch/switch';
+import Alerts from 'components/alerts/alerts';
 import Spinner from 'components/spinner/spinner';
+import Input from 'components/input/input';
+import SocialSignin from 'components/socialSignIn/socialSignIn';
+
+import axios from 'axios';
+import { setCookies } from 'cookies-next';
 
  const SignIn = () => {
 
@@ -27,7 +29,7 @@ import Spinner from 'components/spinner/spinner';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setAlert({...alert, status: false})
+    setAlert({...alert, status: false});
     setLoading(true);
 
      try {
@@ -40,8 +42,8 @@ import Spinner from 'components/spinner/spinner';
       setCookies('token', data?.token);
       setCookies('user', JSON.stringify(data?.user));
 
-      router.push('/dashboard');
       setLoading(false);
+      router.push('/dashboard')
     } catch (error) {
       setLoading(false);
       if (error.response.status === 404) setAlert({status: true, type: 'error', message: error.response.data.message});
@@ -54,14 +56,14 @@ import Spinner from 'components/spinner/spinner';
     {
       alert.status && <Alerts type={alert.type} message={alert.message} seconds={5} /> 
     }
-    <div className="switch-wrapper">
+    <div className={styles.switchWrapper}>
       <Switch />
     </div>
-      <section>
+      <section className={styles.section}>
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
-          <Input onChange={handleSetCredentials} type="email" label="Email" id="email"/>
-          <Input onChange={handleSetCredentials} type="password" label="Password" id="password"/>
+          <Input required={true} onChange={handleSetCredentials} type="email" label="Email" id="email"/>
+          <Input required={true} onChange={handleSetCredentials} type="password" label="Password" id="password"/>
           <button onSubmit={handleSubmit}>Sign In { loading && <Spinner /> }</button>
         </form>
         <span>
@@ -78,7 +80,6 @@ import Spinner from 'components/spinner/spinner';
         </div>
       </section>
 
-      <style jsx>{signInStyle}</style>
     </>
   );
 }

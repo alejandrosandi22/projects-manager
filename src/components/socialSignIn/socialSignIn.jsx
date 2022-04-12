@@ -1,42 +1,27 @@
-import { signIn } from "next-auth/react";
- 
+import { signIn } from 'next-auth/react';
+import Alerts from 'components/alerts/alerts';
+import { useState } from 'react';
+import styles from 'styles/socialSignin.module.scss';
 
 const SocialSignin = () => {
+  const [ alert, setAlert ] = useState({state: false});
+
+
+  const handleSignIn = (e) => {
+    const { id } = e.target;
+
+    setAlert({status: true, type: 'success', message: "Welcome"});
+    signIn(id);
+  }
+
   return (
     <>
-      <button onClick={() => signIn('google')} className="fab fa-google"></button>
-      <button onClick={() => signIn('facebook')} className="fab fa-facebook"></button>
-      <button onClick={() => signIn('github')} className="fab fa-github"></button>
-
-      <style jsx>
-      {`
-        button {
-          border: none;
-          border-radius: 50%;
-          width: 2.5rem;
-          height: 2.5rem;
-          font-size: 1rem;
-          color: #E0E0E0;
-          box-shadow: 0 0 .5rem var(--darkShadow);
-          cursor: pointer;
-          &:hover {
-            filter: brightness(105%);
-          }
-          &:active {
-            transform: scale(.9);
-          }
-        }
-        .fa-google {
-          background: #D1473B;
-        }
-        .fa-facebook {
-          background: #3B5792;
-        }
-        .fa-github {
-          background: #22272b;
-        }  
-      `}
-      </style>
+      {
+        alert.state && <Alerts message={alert.message} type={alert.type} seconds={5}/>
+      }
+      <button id="google" onClick={handleSignIn} className={`fab fa-google ${styles.button} ${styles.google}`}></button>
+      <button id="facebook" onClick={handleSignIn} className={`fab fa-facebook ${styles.button} ${styles.facebook}`}></button>
+      <button id="github" onClick={handleSignIn} className={`fab fa-github ${styles.button} ${styles.github}`}></button>
     </>
   );
 }

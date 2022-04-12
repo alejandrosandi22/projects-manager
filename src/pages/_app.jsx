@@ -1,24 +1,36 @@
 import Head from 'next/head';
-import globals from 'styles/globals';
+import 'styles/globals.scss';
 import { SessionProvider } from 'next-auth/react';
 import Nav from 'components/nav/nav';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useLocalStorage from 'services/localStorage';
 
-export const ChangeThemeContext = React.createContext(null);
+
 export const ThemeContext = React.createContext(null);
  
 function MyApp({ session, Component, pageProps }) {
 
   const [ theme, setTheme ] = useLocalStorage('theme', false);
 
-  const router = useRouter();
-  const { pathname } = router;
+  const [ mode, setMode ] = useState();
+
+  const { pathname } = useRouter();
+
+  useEffect(() => {
+    const storage = window.localStorage.getItem('theme');
+    setMode(Boolean(storage));
+  }, [theme])
 
   const changeTheme = () => {
-    if (theme) setTheme(false);
-    else setTheme(true);
+    if (theme) {
+      setTheme(false);
+      setMode(false);
+    }
+    else {
+      setTheme(true);
+      setMode(true);
+    }
   }
 
   return(
@@ -32,10 +44,9 @@ function MyApp({ session, Component, pageProps }) {
         <title>Projects</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ChangeThemeContext.Provider value={changeTheme}>
-      <ThemeContext.Provider value={theme}>
+      <ThemeContext.Provider value={{changeTheme, theme}}>
         <SessionProvider session={session}>
-          <div className={`App ${theme && 'darkMode'}`}>
+          <div className={`App ${mode}`}>
             { 
               pathname !== '/signin'  
               && pathname !== '/signup' 
@@ -47,8 +58,6 @@ function MyApp({ session, Component, pageProps }) {
           </div>
         </SessionProvider>
       </ThemeContext.Provider>
-      </ChangeThemeContext.Provider>
-      <style jsx global>{globals}</style>
     </>
   );
   
