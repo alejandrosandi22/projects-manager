@@ -19,20 +19,20 @@ const userSchema = Schema({
     unique: true,
     trim: true,
     maxLenght: 255,
-    minLenght: 5
+    minLenght: 5,
   },
   password: {
     type: String,
     required: true,
     trim: true,
     maxLenght: 255,
-    minLenght: 5
+    minLenght: 5,
   },
   image: {
-    type: String
-  }
+    type: String,
+  },
 }, {
   timestamps: true,
-  versionKey: false
-})
+  versionKey: false,
+});
 export default models.User || model('User', userSchema);

@@ -1,7 +1,6 @@
-import css from "styled-jsx/css";
-import { colors } from "./styles";
+import css from 'styled-jsx/css';
 
-export const signUpStyle = css`
+export default css`
   .switch-wrapper {
     z-index: 100;
     position: absolute;
@@ -21,15 +20,15 @@ export const signUpStyle = css`
     align-items: center;
     width: 30rem;
     height: 40rem;
-    background: ${colors.primary};
-    box-shadow: .2rem .2rem .5rem ${colors.darkShadow},
-    -.2rem -.2rem .5rem ${colors.lightShadow};
+    background: var(--primary);
+    box-shadow: .2rem .2rem .5rem var(--darkShadow),
+    -.2rem -.2rem .5rem var(--lightShadow);
     overflow: hidden;
     h2 {
       text-transform: uppercase;
       font-size: 2rem;
       text-align: center;
-      color: ${colors.color};
+      color: var(--color);
     }
     form {
       height: 50%;
@@ -52,10 +51,10 @@ export const signUpStyle = css`
       }
       button {
         border: none;
-        background: ${colors.primary};
-        color: ${colors.color};
-        box-shadow: .15rem .15rem .5rem ${colors.darkShadow},
-        -.15rem -.15rem .5rem ${colors.lightShadow};
+        background: var(--primary);
+        color: var(--color);
+        box-shadow: .15rem .15rem .5rem var(--darkShadow),
+        -.15rem -.15rem .5rem var(--lightShadow);
         font-size: 1.1rem;
         width: 7rem;
         height: 2.3rem;
@@ -66,17 +65,22 @@ export const signUpStyle = css`
           filter: brightness(105%);
         }
         &:active {
-          box-shadow: inset .15rem .15rem .5rem ${colors.darkShadow},
-          inset -.15rem -.15rem .5rem ${colors.lightShadow};
+          box-shadow: inset .15rem .15rem .5rem var(--darkShadow),
+          inset -.15rem -.15rem .5rem var(--lightShadow);
         }
       }
     }
     a {
-      color: ${colors.color};
+      color: var(--color);
       opacity: .7;
       &:hover {
         opacity: 1;
       }
+    }
+    h3 {
+      color: var(--color);
+      font-size: 1.1rem;
+      font-weight: 500;
     }
     div {
       width: 60%;
@@ -97,4 +101,4 @@ export const signUpStyle = css`
       height: 500px;
     }
   }
-`
+`;
