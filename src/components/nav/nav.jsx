@@ -1,17 +1,24 @@
-import Link from "next/link";
+import Link from 'next/link';
 import { useEffect, useState } from "react";
-import { colors } from "styles/styles";
+ 
 import { useRouter } from 'next/router';
-
+import { signOut } from 'next-auth/react';
+import { removeCookies } from 'cookies-next';
 
 const Nav = () => {
-
   const [selected, setSelected] = useState('0');
   const router = useRouter();
+
 
   const handleClick = (e) => {
     const { id } = e.target;
     setSelected(id);
+  }
+
+  const handleSignOut = () => {
+    removeCookies('token');
+    removeCookies('user');
+    signOut();
   }
 
   useEffect(() => {
@@ -58,7 +65,10 @@ const Nav = () => {
           </a>
         </Link>
         <a>
-          <li id="4" onClick={handleClick} className={`${selected === '4' && 'active'}`}>
+          <li id="4" onClick={(e) => {
+            handleSignOut();
+            handleClick(e);
+          }} className={`${selected === '4' && 'active'}`}>
             <i className="fal fa-sign-out"></i>
             <span>Sign Out</span>
           </li>
@@ -76,10 +86,10 @@ const Nav = () => {
           margin: auto 0;
           width: 5rem;
           height: 80%;
-          background: ${colors.primary};
+          background: var(--primary);
           border-radius: 0 2rem 2rem 0;
-          box-shadow: .2rem .2rem .5rem ${colors.darkShadow},
-          -.2rem -.2rem .5rem ${colors.lightShadow};
+          box-shadow: .2rem .2rem .5rem var(--darkShadow),
+          -.2rem -.2rem .5rem var(--lightShadow);
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -96,7 +106,7 @@ const Nav = () => {
             li {
               display: flex;
               align-items: center;
-              color: ${colors.color};
+              color: var(--color);
               cursor: pointer;
               font-size: 1.25rem;
               width: 100%;
@@ -118,8 +128,8 @@ const Nav = () => {
               }
             }
             .active {
-              background: ${colors.secondary};
-              box-shadow: 0 2px 5px ${colors.darkShadow};
+              background: var(--secondary);
+              box-shadow: 0 2px 5px var(--darkShadow);
               &:hover {
                 opacity: 1;
               }

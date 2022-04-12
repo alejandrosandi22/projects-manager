@@ -3,12 +3,23 @@ import globals from 'styles/globals';
 import { SessionProvider } from 'next-auth/react';
 import Nav from 'components/nav/nav';
 import { useRouter } from 'next/router';
-      
+import React from 'react';
+import useLocalStorage from 'services/localStorage';
+
+export const ChangeThemeContext = React.createContext(null);
+export const ThemeContext = React.createContext(null);
+ 
 function MyApp({ session, Component, pageProps }) {
+
+  const [ theme, setTheme ] = useLocalStorage('theme', false);
 
   const router = useRouter();
   const { pathname } = router;
 
+  const changeTheme = () => {
+    if (theme) setTheme(false);
+    else setTheme(true);
+  }
 
   return(
     <>
@@ -21,18 +32,22 @@ function MyApp({ session, Component, pageProps }) {
         <title>Projects</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ChangeThemeContext.Provider value={changeTheme}>
+      <ThemeContext.Provider value={theme}>
+        <SessionProvider session={session}>
+          <div className={`App ${theme && 'darkMode'}`}>
+            { 
+              pathname !== '/signin'  
+              && pathname !== '/signup' 
+              && pathname !== '/recovery' 
+              && pathname !== '/' && <Nav />  
+            } 
 
-      {
-        pathname !== '/signin'
-        && pathname !== '/signup'
-        && pathname !== '/recovery'
-        && pathname !== '/' && <Nav />
-      }
-
-      <SessionProvider session={session}>
-        <Component {...pageProps} />
-      </SessionProvider>
-      
+            <Component {...pageProps} />
+          </div>
+        </SessionProvider>
+      </ThemeContext.Provider>
+      </ChangeThemeContext.Provider>
       <style jsx global>{globals}</style>
     </>
   );

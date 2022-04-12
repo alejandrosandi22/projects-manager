@@ -1,7 +1,27 @@
+import { ChangeThemeContext, ThemeContext } from "pages/_app";
+import { useContext, useEffect, useRef } from "react";
+import useLocalStorage from "services/localStorage";
+ 
+
 const Switch = () => {
+
+  const theme = useContext(ThemeContext);
+  const changeTheme = useContext(ChangeThemeContext);
+
+  const [ checked, setChecked ] = useLocalStorage('cheked', false);
+  const themeToggle = useRef(<input/>);
+  
+  useEffect(() => {
+    if (checked) themeToggle.current.checked = true;
+    else themeToggle.current.checked = false;
+  }, []);
+  
   return (
     <>
-      <input type="checkbox" className="light-mode" />
+      <input ref={themeToggle} onChange={(e) => {
+            setChecked(e.target.checked);
+            changeTheme();
+          }} type="checkbox" className={theme ? 'dark-mode' : 'light-mode'} />
 
       <style jsx>
       {`
@@ -26,7 +46,7 @@ const Switch = () => {
             transition: .5s;
           }
         }
-        .light-mode{
+        .light-mode {
           background: #e0e0e0;
           box-shadow: inset 4px 4px .1rem #5a5a5a,
           inset -4px -4px .1rem #ffffff;
@@ -39,7 +59,7 @@ const Switch = () => {
             transition: .5s;
           }
         }
-        .dark-mode{
+        .dark-mode {
           background: #141414;
           box-shadow: inset 4px 4px 1px #080808,
           inset -4px -4px 1px #202020;

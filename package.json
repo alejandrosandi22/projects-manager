@@ -3,10 +3,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "@next-auth/mongodb-adapter": "^1.0.3",
+    "axios": "^0.26.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.5.0",
     "mongoose": "^6.2.10",
     "next": "latest",
@@ -15,6 +19,13 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "cookies-next": "^2.0.4",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
     "node-sass": "^7.0.1",
     "styled-jsx-plugin-sass": "^1.0.0"
   }

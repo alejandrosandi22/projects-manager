@@ -1,11 +1,11 @@
-import { colors } from "styles/styles";
+ 
 
 const Input = (props) => {
   return (
     <>
     <div>
       <label htmlFor={props.id}>{props.label}</label>
-      <input onChange={props.onChange} value={props.value} type={props.type} id={props.id} />
+      <input onChange={props.onChange} type={props.type} id={props.id} />
     </div>
 
       <style jsx>
@@ -21,20 +21,20 @@ const Input = (props) => {
           width: 80%;
         }
         label {
-          color: ${colors.color};
+          color: var(--color);
           font-size: 1.1rem;
         }
         input {
-          color: ${colors.color};
+          color: var(--color);
           font-size: 1rem;
           border: none;
           height: 2rem;
           padding: 0 1rem;
-          background: ${colors.primary};
-          box-shadow: inset .15rem .15rem .5rem ${colors.darkShadow},
-          inset -.15rem -.15rem .5rem ${colors.lightShadow};
+          background: var(--primary);
+          box-shadow: inset .15rem .15rem .5rem var(--darkShadow),
+          inset -.15rem -.15rem .5rem var(--lightShadow);
           &:focus-visible {
-            outline: 1px solid ${colors.secondary};
+            outline: 1px solid var(--secondary);
           }
         }
       }
