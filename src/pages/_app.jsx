@@ -12,26 +12,21 @@ export const ThemeContext = React.createContext(null);
 function MyApp({ session, Component, pageProps }) {
 
   const [ theme, setTheme ] = useLocalStorage('theme', false);
+  const [ mode, setMode ] = useState('lightMode');
 
-  const [ mode, setMode ] = useState();
-
+  
   const { pathname } = useRouter();
-
-  useEffect(() => {
-    const storage = window.localStorage.getItem('theme');
-    setMode(Boolean(storage));
-  }, [theme])
-
+  
   const changeTheme = () => {
-    if (theme) {
-      setTheme(false);
-      setMode(false);
-    }
-    else {
-      setTheme(true);
-      setMode(true);
-    }
+    if (theme) setTheme(false);
+    else setTheme(true);
+    setMode(theme.toString())
   }
+  
+  useEffect(() => {
+    if (theme) setMode('darkMode');
+    else setMode('lightMode')
+  }, [theme])
 
   return(
     <>

@@ -1,4 +1,3 @@
-import Nav from "components/nav/nav";
 import { getSession } from "next-auth/react";
 
 const Dashboard = () => {

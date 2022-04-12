@@ -27,5 +27,5 @@ export default async (req, res) => {
     } catch (error) {
       return res.status(500).json({ Error: error.message });
     }
-  } else return res.redirect('/')
+  } else return res.redirect('/');
 };
