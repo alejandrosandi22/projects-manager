@@ -4,7 +4,7 @@ const conn = {
   isConnected: false,
 };
 
-export async function dbConnect() {
+export default async function dbConnect() {
   if (conn.isConnected) return;
 
   const db = await connect(process.env.MONGODB_URI);
@@ -12,8 +12,8 @@ export async function dbConnect() {
 }
 
 connection.on('connected', () => {
-  console.log('MongoDB Conected')
+  console.log('MongoDB Conected');
 });
 connection.on('error', () => {
-  console.log('MongoDB error')
+  console.log('MongoDB error');
 });

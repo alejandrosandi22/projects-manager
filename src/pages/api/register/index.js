@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
-import { dbConnect } from '../../../../utils/mongoose';
-import User from '../../../../models/User';
 import jwt from 'jsonwebtoken';
+import dbConnect from '../../../../utils/mongoose';
+import User from '../../../../models/User';
 
 dbConnect();
 
@@ -27,5 +27,5 @@ export default async (req, res) => {
     } catch (error) {
       return res.status(500).json({ Error: error.message });
     }
-  } else return res.status(400).json({ message: 'This method is not supported' });
+  } else return res.redirect('/')
 };

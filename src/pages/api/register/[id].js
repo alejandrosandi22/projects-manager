@@ -1,4 +1,4 @@
-import { dbConnect } from '../../../../utils/mongoose';
+import dbConnect from '../../../../utils/mongoose';
 import User from '../../../../models/User';
 
 dbConnect();

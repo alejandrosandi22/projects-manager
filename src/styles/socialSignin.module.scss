@@ -1,0 +1,25 @@
+.button {
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1rem;
+  color: #E0E0E0;
+  box-shadow: 0 0 .5rem var(--darkShadow);
+  cursor: pointer;
+  &:hover {
+    filter: brightness(105%);
+  }
+  &:active {
+    transform: scale(.9);
+  }
+}
+.google {
+  background: #D1473B;
+}
+.facebook {
+  background: #3B5792;
+}
+.github {
+  background: #22272b;
+} 
