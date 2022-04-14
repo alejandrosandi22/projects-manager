@@ -7,3 +7,22 @@ export const SIGN_IN_QUERY = gql`
     }
   }
 `;
+
+
+export const SIGN_UP_QUERY = gql`
+  mutation createUser($fullName: String!, $email: String!, $password: String!) {
+    createUser(fullName: $fullName, email: $email, password: $password) {
+      value
+    }
+  }
+`;
+
+export const CURRENT_USER_QUERY = gql`
+  query currentUser {
+    currentUser {
+      fullName
+      email
+      image
+    }
+  }
+`;

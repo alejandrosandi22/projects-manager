@@ -7,10 +7,15 @@ import { removeCookies } from 'cookies-next';
 
 import styles from 'styles/nav.module.scss';
 
+import { CURRENT_USER_QUERY } from '../../../graphql/queries/user';
+import { useQuery } from '@apollo/client';
+
 const Nav = () => {
   const [selected, setSelected] = useState('0');
   const router = useRouter();
+  const [ user, setUser ] = useState(null);
 
+  const { loading, error, data } = useQuery(CURRENT_USER_QUERY)
 
   const handleClick = (e) => {
     const { id } = e.target;
@@ -29,6 +34,10 @@ const Nav = () => {
     if (pathname === '/completed') setSelected('2');
     if (pathname === '/help') setSelected('3');
   }, []);
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   return (
     <>

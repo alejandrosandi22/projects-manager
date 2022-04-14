@@ -10,30 +10,10 @@ import Spinner from 'components/spinner/spinner';
 import Input from 'components/input/input';
 import SocialSignin from 'components/socialSignIn/socialSignIn';
 
-import axios from 'axios';
-import { setCookies } from 'cookies-next';
-
+import { gql, useMutation } from '@apollo/client';
 import { SIGN_IN_QUERY } from '../../graphql/queries/user';
 
-//import { gql } from '@apollo/client';
-
-import { ApolloClient, useMutation, ApolloProvider, InMemoryCache, HttpLink, gql } from '@apollo/client';
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: 'http://localhost:3000/api/graphql',
-  })
-});
-
-const QUERY = gql`
-query {
-  currentUser {
-    fullName
-    email
-    image
-  }
-}`
+import { setCookies } from 'cookies-next';
 
  const SignIn = () => {
 
@@ -45,8 +25,8 @@ query {
 
   const [ signIn, signInResult ] = useMutation(SIGN_IN_QUERY, {
     onError: (error) => {
-      setAlert({status: true, type: 'error', message: `${error.message}`})
-      setLoading(false)
+      setAlert({status: true, type: 'error', message: `${error.message}`});
+      setLoading(false);
     }
   });
 
@@ -59,7 +39,6 @@ query {
       setLoading(false);
 
       router.push('/dashboard');
-
     }
   }, [signInResult.data])
 
@@ -75,25 +54,7 @@ query {
     setAlert({...alert, status: false});
     setLoading(true);
 
-    signIn({ variables: {email: credentials.email, password: credentials.password} })
-
-/*      try {
-      const { data } = await axios.post(`/api/login`, JSON.stringify(credentials), {
-        headers: {'Content-Type': 'application/json'}
-      })
-
-      setAlert({status: true, type: 'success', message: `Welcome ${data.user.fullName}`});
-
-      setCookies('token', data?.token);
-      setCookies('user', JSON.stringify(data?.user));
-
-      setLoading(false);
-      router.push('/dashboard')
-    } catch (error) {
-      setLoading(false);
-      if (error.response.status === 404) setAlert({status: true, type: 'error', message: error.response.data.message});
-      if (error.response.status === 400) setAlert({status: true, type: 'error', message: error.response.data.message});
-    }  */
+    signIn({ variables: {email: credentials.email, password: credentials.password} });
   }
 
   return(
@@ -136,8 +97,6 @@ export const getServerSideProps = async (context) => {
   const session = await getSession(context);
 
   const token = context.req.cookies['manager-app-projects-user-token'];
-
-  console.log('token', token)
 
   if (session || token) return {
     redirect: {

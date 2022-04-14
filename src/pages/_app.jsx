@@ -7,11 +7,20 @@ import React, { useEffect, useState } from 'react';
 import useLocalStorage from 'services/localStorage';
 
 import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink, gql } from '@apollo/client';
+import { getCookie } from 'cookies-next';
+
+const getAuth = () => {
+  const token = getCookie('manager-app-projects-user-token');
+  return token ? `bearer ${token}` : null;
+}
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: '/api/graphql',
+    headers: {
+      authorization: getAuth(),
+    },
+    uri: 'http://localhost:3000/api/graphql',
   })
 });
 

@@ -27,5 +27,8 @@ export const typeDefs = gql`
       email: String!
       password: String!
     ): Token
+    deleteUser(
+      email: String!
+    ): User
   }
 `;
