@@ -5,7 +5,6 @@ const Alerts = (props) => {
 
   const [ alertData, setAlertData ] = useState({state: ''});
 
-
   const typeAlert = () => {
     switch (props.type) {
       case 'success':
@@ -39,10 +38,10 @@ const Alerts = (props) => {
 
 
   return (
-    <div className={`${styles.div} ${alertData.state}`} style={{background: `${alertData.color}`}}>
+    <div className={`${styles.div} ${styles[alertData.state]}`} style={{background: `${alertData.color}`}}>
       <i className={`fal fa-${alertData.icon}`}></i>
       <p>{ props.message }</p>
-      <i className='fal fa-times close' onClick={() => setAlertData({...alertData, state: 'hidde'})}></i>
+      <i className='fal fa-times close' onClick={() => setAlertData({...alertData, state: 'hidden'})}></i>
     </div>
   );
 }
