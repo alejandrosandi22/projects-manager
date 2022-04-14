@@ -18,8 +18,7 @@ const Nav = () => {
   }
 
   const handleSignOut = () => {
-    removeCookies('token');
-    removeCookies('user');
+    removeCookies('manager-app-projects-user-token');
     signOut();
   }
 

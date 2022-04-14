@@ -6,6 +6,14 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import useLocalStorage from 'services/localStorage';
 
+import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink, gql } from '@apollo/client';
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    uri: '/api/graphql',
+  })
+});
 
 export const ThemeContext = React.createContext(null);
  
@@ -39,6 +47,7 @@ function MyApp({ session, Component, pageProps }) {
         <title>Projects</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ApolloProvider client={client}>
       <ThemeContext.Provider value={{changeTheme, theme}}>
         <SessionProvider session={session}>
           <div className={`App ${mode}`}>
@@ -53,6 +62,7 @@ function MyApp({ session, Component, pageProps }) {
           </div>
         </SessionProvider>
       </ThemeContext.Provider>
+      </ApolloProvider>
     </>
   );
   

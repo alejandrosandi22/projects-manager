@@ -1,17 +1,13 @@
 import { Schema, models, model } from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 
 const userSchema = Schema({
-  name: {
+  fullName: {
     type: String,
     required: true,
     trim: true,
     maxLenght: 255,
-  },
-  lastName: {
-    type: String,
-    required: true,
-    trim: true,
-    maxLenght: 255,
+    minLenght: 5,
   },
   email: {
     type: String,
@@ -35,4 +31,7 @@ const userSchema = Schema({
   timestamps: true,
   versionKey: false,
 });
+
+userSchema.plugin(uniqueValidator);
+
 export default models.User || model('User', userSchema);

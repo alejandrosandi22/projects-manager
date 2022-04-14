@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import Link from 'next/link'
@@ -13,12 +13,55 @@ import SocialSignin from 'components/socialSignIn/socialSignIn';
 import axios from 'axios';
 import { setCookies } from 'cookies-next';
 
+import { SIGN_IN_QUERY } from '../../graphql/queries/user';
+
+//import { gql } from '@apollo/client';
+
+import { ApolloClient, useMutation, ApolloProvider, InMemoryCache, HttpLink, gql } from '@apollo/client';
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    uri: 'http://localhost:3000/api/graphql',
+  })
+});
+
+const QUERY = gql`
+query {
+  currentUser {
+    fullName
+    email
+    image
+  }
+}`
+
  const SignIn = () => {
 
   const router = useRouter();
+  
   const [ credentials, setCredentials ] = useState();
   const [ alert, setAlert ] = useState({email: '', password: '',status: false});
   const [ loading, setLoading ] = useState(false);
+
+  const [ signIn, signInResult ] = useMutation(SIGN_IN_QUERY, {
+    onError: (error) => {
+      setAlert({status: true, type: 'error', message: `${error.message}`})
+      setLoading(false)
+    }
+  });
+
+  useEffect(() => {
+    if (signInResult.data) {
+      const { value } = signInResult.data.signIn;
+      setCookies('manager-app-projects-user-token', value);
+
+      setAlert({status: true, type: 'success', message: 'Welcome!'});
+      setLoading(false);
+
+      router.push('/dashboard');
+
+    }
+  }, [signInResult.data])
 
   const handleSetCredentials = (e) => {
     setCredentials({
@@ -32,7 +75,9 @@ import { setCookies } from 'cookies-next';
     setAlert({...alert, status: false});
     setLoading(true);
 
-     try {
+    signIn({ variables: {email: credentials.email, password: credentials.password} })
+
+/*      try {
       const { data } = await axios.post(`/api/login`, JSON.stringify(credentials), {
         headers: {'Content-Type': 'application/json'}
       })
@@ -48,7 +93,7 @@ import { setCookies } from 'cookies-next';
       setLoading(false);
       if (error.response.status === 404) setAlert({status: true, type: 'error', message: error.response.data.message});
       if (error.response.status === 400) setAlert({status: true, type: 'error', message: error.response.data.message});
-    } 
+    }  */
   }
 
   return(
@@ -90,10 +135,11 @@ export const getServerSideProps = async (context) => {
 
   const session = await getSession(context);
 
-  const user = context.req.cookies['user'];
-  const token = context.req.cookies['token'];
+  const token = context.req.cookies['manager-app-projects-user-token'];
 
-  if (session || (user && token)) return {
+  console.log('token', token)
+
+  if (session || token) return {
     redirect: {
       destination: '/dashboard',
       permanent: false

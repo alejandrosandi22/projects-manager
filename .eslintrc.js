@@ -21,5 +21,6 @@ module.exports = {
   rules: {
     'import/no-extraneous-dependencies': 'off',
     'import/named': 'off',
+    'import/prefer-default-export': 'off',
   },
 };
