@@ -26,7 +26,7 @@ export const resolvers = {
 
         const userForToken = {
           email: args.email,
-          id: user._id,
+          id: newUser._id,
         };
 
         const token = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
@@ -66,6 +66,12 @@ export const resolvers = {
       } catch (error) {
         throw new UserInputError(error.message);
       }
+    },
+    deleteUser: async (_root, args) => {
+      const deletedUser = await User.findOneAndDelete({ email: args.email });
+      if (!deletedUser) throw new UserInputError('User does not exist');
+
+      return deletedUser;
     },
   },
 };

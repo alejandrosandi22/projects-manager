@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import styles from 'styles/signup.module.scss';
@@ -7,10 +7,12 @@ import Alerts from 'components/alerts/alerts'
 import Input from 'components/input/input';
 import Switch from 'components/switch/switch';
 import SocialSignin from 'components/socialSignIn/socialSignIn';
-
-import axios from 'axios';
-import { setCookies } from 'cookies-next';
 import Spinner from 'components/spinner/spinner';
+
+import { setCookies } from 'cookies-next';
+
+import { SIGN_UP_QUERY } from '../../graphql/queries/user';
+import { useMutation } from '@apollo/client';
 
 const Signup = () => {
 
@@ -18,6 +20,15 @@ const Signup = () => {
   const [ confirmPassword, setConfirmPassword] = useState('');
   const [ alert, setAlert ] = useState({status: false});
   const [ loading, setLoading ] = useState(false);
+
+  const [ signUp, signUpResult ] = useMutation(SIGN_UP_QUERY, {
+    onError: (error) => {
+      console.log(error)
+      console.log(error.message)
+      setAlert({status: true, type: 'error', message: error.message});
+      loading(false);
+    }
+  })
 
   const router = useRouter();
 
@@ -28,6 +39,18 @@ const Signup = () => {
     })
   }
 
+  useEffect(() => {
+    if (signUpResult.data) {
+      const { value } = signUpResult.data.createUser;
+      setCookies('manager-app-projects-user-token', value);
+
+      setAlert({status: true, type: 'success', message: `Welcome! ${credentials.name} ${credentials.lastName}`});
+      setLoading(false);
+
+      router.push('/dashboard');
+    }
+  }, [signUpResult.data])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setAlert(false)
@@ -35,29 +58,18 @@ const Signup = () => {
 
     if (loading) return;
 
-      if (credentials.password !== confirmPassword) {
-        setAlert({status: true, type: 'warning', message: "Confirmed password don't match."});
-        return setTimeout(() => setAlert(false), 5500);
-      }
-
-     try {
-      const { data } = await axios.post(`/api/register`, JSON.stringify(credentials), {
-        headers: {'Content-Type': 'application/json'}
-      })
-      setAlert({status: true, type: 'success', message: `Welcome ${credentials.name} ${credentials.lastName}`});
-      
-      setCookies('token', data?.token);
-      setCookies('user', JSON.stringify(data?.user));
-      
-      setLoading(false);
-      router.push('/dashboard')
-
-    } catch (error) {
-      setLoading(false);
-      if (error.response.status === 422) setAlert({status: true, type: 'error', message: error.response.data.message});
-      setAlert({status: true, type: 'error', message: error.response.data.message});
+    if (credentials.password !== confirmPassword) {
+      setAlert({status: true, type: 'warning', message: "Confirmed password don't match."});
+      return setTimeout(() => setAlert(false), 5500);
     }
-  }
+
+    signUp({ variables: {
+      fullName: `${credentials.name} ${credentials.lastName}`,
+      email: credentials.email,
+      password: credentials.password,
+    }});
+
+   }
 
   return (
     <>
