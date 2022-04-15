@@ -14,23 +14,20 @@ import { setCookies } from 'cookies-next';
 import { SIGN_UP_QUERY } from '../../graphql/queries/user';
 import { useMutation } from '@apollo/client';
 
-const Signup = () => {
+export default function Signup() {
 
   const [ credentials, setCredentials ] = useState({});
   const [ confirmPassword, setConfirmPassword] = useState('');
   const [ alert, setAlert ] = useState({status: false});
   const [ loading, setLoading ] = useState(false);
+  const router = useRouter();
 
   const [ signUp, signUpResult ] = useMutation(SIGN_UP_QUERY, {
     onError: (error) => {
-      console.log(error)
-      console.log(error.message)
       setAlert({status: true, type: 'error', message: error.message});
       loading(false);
     }
   })
-
-  const router = useRouter();
 
   const handleSetCredentials = (e) => {
     setCredentials({
@@ -53,7 +50,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setAlert(false)
+    setAlert(false);
     setLoading(true);
 
     if (loading) return;
@@ -64,11 +61,10 @@ const Signup = () => {
     }
 
     signUp({ variables: {
-      fullName: `${credentials.name} ${credentials.lastName}`,
+       name: `${credentials.name} ${credentials.lastName}`,
       email: credentials.email,
       password: credentials.password,
     }});
-
    }
 
   return (
@@ -110,5 +106,3 @@ const Signup = () => {
     </>
   );
 };
-
-export default Signup;

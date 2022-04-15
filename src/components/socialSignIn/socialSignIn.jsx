@@ -1,16 +1,15 @@
-import { signIn } from 'next-auth/react';
 import Alerts from 'components/alerts/alerts';
-import { useState } from 'react';
 import styles from 'styles/socialSignin.module.scss';
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
 
-const SocialSignin = () => {
+export default function SocialSignin() {
+
   const [ alert, setAlert ] = useState({state: false});
-
 
   const handleSignIn = (e) => {
     const { id } = e.target;
-
-    setAlert({status: true, type: 'success', message: "Welcome"});
+    setAlert({status: true, type: 'success', message: 'Welcome!'});
     signIn(id);
   }
 
@@ -25,5 +24,3 @@ const SocialSignin = () => {
     </>
   );
 }
-
-export default SocialSignin;

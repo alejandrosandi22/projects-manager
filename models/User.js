@@ -1,8 +1,8 @@
-import { Schema, models, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
 const userSchema = Schema({
-  fullName: {
+  name: {
     type: String,
     required: true,
     trim: true,

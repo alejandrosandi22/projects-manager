@@ -1,10 +1,7 @@
-
-const Recovery = () => {
+export default function Recovery() {
   return (
     <>
       recovery works!      
     </>
   );
 }
-
-export default Recovery;

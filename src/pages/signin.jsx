@@ -15,13 +15,12 @@ import { SIGN_IN_QUERY } from '../../graphql/queries/user';
 
 import { setCookies } from 'cookies-next';
 
- const SignIn = () => {
+export default function SignIn() {
 
-  const router = useRouter();
-  
   const [ credentials, setCredentials ] = useState();
   const [ alert, setAlert ] = useState({email: '', password: '',status: false});
   const [ loading, setLoading ] = useState(false);
+  const router = useRouter();
 
   const [ signIn, signInResult ] = useMutation(SIGN_IN_QUERY, {
     onError: (error) => {
@@ -85,12 +84,9 @@ import { setCookies } from 'cookies-next';
           <SocialSignin />
         </div>
       </section>
-
     </>
   );
 }
-
-export default SignIn;
 
 export const getServerSideProps = async (context) => {
 

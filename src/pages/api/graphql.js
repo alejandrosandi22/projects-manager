@@ -2,14 +2,14 @@ import { ApolloServer } from 'apollo-server-micro';
 import Cors from 'micro-cors';
 import jwt from 'jsonwebtoken';
 import { typeDefs } from '../../../graphql/schema';
-import { resolvers } from '../../../graphql/resolvers';
+import { userResolvers } from '../../../graphql/resolvers/user';
 import User from '../../../models/User';
 
 const cors = Cors();
 
 const apolloServer = new ApolloServer({
   typeDefs,
-  resolvers,
+  resolvers: userResolvers,
   context: async ({ req }) => {
     const auth = req ? req.headers.authorization : null;
 

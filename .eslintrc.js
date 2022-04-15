@@ -22,5 +22,6 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'import/named': 'off',
     'import/prefer-default-export': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

@@ -1,11 +1,13 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { ThemeContext } from "pages/_app";
-import useLocalStorage from "services/localStorage";
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from "../../../store/actions";
+
 import styles from 'styles/switch.module.scss';
 
-const Switch = () => {
+export default function Switch() {
 
-  const { changeTheme, theme} = useContext(ThemeContext);
+  const { theme } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const [ mode, setMode ] = useState('lightMode');
   const themeToggle = useRef(<input/>);
@@ -23,13 +25,9 @@ const Switch = () => {
   
   return (
     <>
-      <input className={`${styles.input} ${styles[mode]}`} ref={themeToggle} onChange={(e) => {
-            changeTheme();
-          }} type="checkbox"/>
-
-
+      <input className={`${styles.input} ${styles[mode]}`} ref={themeToggle}
+      onChange={() => actions(dispatch, '@theme/mode', (theme ? false : true))}
+      type="checkbox"/>
     </>
   );
 }
-
-export default Switch;
