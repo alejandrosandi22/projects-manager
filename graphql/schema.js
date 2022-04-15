@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-micro';
 
 export const typeDefs = gql`
   type User {
-    fullName: String!
+    name: String!
     email: String!
     password: String!
     image: String
@@ -18,7 +18,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createUser(
-      fullName: String!
+      name: String!
       email: String!
       password: String!
       image: String

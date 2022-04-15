@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from 'styles/alerts.module.scss';
 
-const Alerts = (props) => {
+export default function Alerts (props) {
 
   const [ alertData, setAlertData ] = useState({state: ''});
 
@@ -35,8 +35,6 @@ const Alerts = (props) => {
     };
   }, [props]);
 
-
-
   return (
     <div className={`${styles.div} ${styles[alertData.state]}`} style={{background: `${alertData.color}`}}>
       <i className={`fal fa-${alertData.icon}`}></i>
@@ -45,5 +43,3 @@ const Alerts = (props) => {
     </div>
   );
 }
-
-export default Alerts;

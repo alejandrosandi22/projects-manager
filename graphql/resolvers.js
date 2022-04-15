@@ -75,3 +75,9 @@ export const resolvers = {
     },
   },
 };
+
+export const test = {
+  Mutation: {
+    mutation1: (_root, args) => args.email,
+  },
+};

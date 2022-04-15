@@ -7,15 +7,9 @@ import { removeCookies } from 'cookies-next';
 
 import styles from 'styles/nav.module.scss';
 
-import { CURRENT_USER_QUERY } from '../../../graphql/queries/user';
-import { useQuery } from '@apollo/client';
-
-const Nav = () => {
+export default function Nav() {
   const [selected, setSelected] = useState('0');
   const router = useRouter();
-  const [ user, setUser ] = useState(null);
-
-  const { loading, error, data } = useQuery(CURRENT_USER_QUERY)
 
   const handleClick = (e) => {
     const { id } = e.target;
@@ -33,11 +27,8 @@ const Nav = () => {
     if (pathname === '/projects') setSelected('1');
     if (pathname === '/completed') setSelected('2');
     if (pathname === '/help') setSelected('3');
+    if (pathname === '/profile') setSelected('4');
   }, []);
-
-  useEffect(() => {
-    console.log(data)
-  }, [data])
 
   return (
     <>
@@ -74,11 +65,19 @@ const Nav = () => {
             </li>
           </a>
         </Link>
+        <Link href="/profile">
+          <a>
+            <li id="4" onClick={handleClick} className={`${selected === '4' && styles['active']}`}>
+              <i className='fal fa-user'></i>
+              <span>Profile</span>
+            </li>
+          </a>
+        </Link>
         <a>
-          <li id="4" onClick={(e) => {
+          <li id="5" onClick={(e) => {
             handleSignOut();
             handleClick(e);
-          }} className={`${selected === '4' && styles['active']}}`}>
+          }} className={`${selected === '5' && styles['active']}}`}>
             <i className="fal fa-sign-out"></i>
             <span>Sign Out</span>
           </li>
@@ -89,5 +88,3 @@ const Nav = () => {
     </>
   );
 }
-
-export default Nav;

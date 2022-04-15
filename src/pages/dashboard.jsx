@@ -1,14 +1,12 @@
-import { getSession } from "next-auth/react";
+import { getSession } from 'next-auth/react';
 
-const Dashboard = () => {
+export default function Dashboard() {
 
   return (
     <>
     </>
   );
 }
-
-export default Dashboard;
 
 export const getServerSideProps = async (context) => {
 

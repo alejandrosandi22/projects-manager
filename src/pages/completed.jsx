@@ -1,7 +1,6 @@
-import Nav from "components/nav/nav";
-import { getSession } from "next-auth/react";
+import { getSession } from 'next-auth/react';
 
-const Completed = () => {
+export default function Completed() {
   return (
     <>
       completed works!
@@ -9,17 +8,13 @@ const Completed = () => {
   );
 }
 
-export default Completed;
-
-
 export const getServerSideProps = async (context) => {
 
   const session = await getSession(context);
 
-  const user = context.req.cookies['user'];
-  const token = context.req.cookies['token'];
+  const token = context.req.cookies['manager-app-projects-user-token'];
 
-  if (!session && !(user && token)) return {
+  if (!session && !token) return {
     redirect: {
       destination: '/signin',
       permanent: false
