@@ -25,3 +25,13 @@ export const CURRENT_USER_QUERY = gql`
     }
   }
 `;
+
+export const DELETE_USER = gql`
+  mutation deleteUser($email: String!) {
+    deleteUser(email: $email) {
+      name
+      email
+      image
+    }
+  }
+`;

@@ -17,7 +17,7 @@ export default function MyApp({ session, Component, pageProps }) {
               pathname !== '/signin'  
               && pathname !== '/signup' 
               && pathname !== '/recovery' 
-              && pathname !== '/' && <Nav />  
+              && pathname !== '/' && <Nav />
             }
             <Component {...pageProps} />
         </Layout>

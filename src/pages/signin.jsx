@@ -10,7 +10,7 @@ import Spinner from 'components/spinner/spinner';
 import Input from 'components/input/input';
 import SocialSignin from 'components/socialSignIn/socialSignIn';
 
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { SIGN_IN_QUERY } from '../../graphql/queries/user';
 
 import { setCookies } from 'cookies-next';

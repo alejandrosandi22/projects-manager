@@ -1,4 +1,4 @@
-import { SessionProvider } from 'next-auth/react';
+import { getSession, SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
 import { ApolloProvider } from '@apollo/client';
 import { createStore } from 'redux';
