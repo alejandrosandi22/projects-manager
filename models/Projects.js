@@ -31,6 +31,9 @@ const projectsSchema = new Schema({
     name: { type: String },
     content: { type: String },
   },
+  completed: {
+    type: Boolean
+  },
 }, {
   timestamps: true,
   versionKey: false,
