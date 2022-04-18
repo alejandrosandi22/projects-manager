@@ -1,13 +1,21 @@
-.div {
+.card {
   width: 90%;
   min-height: 9rem;
+  max-height: 22rem;
   background: var(--primary);
   box-shadow: .25rem .25rem .5rem var(--darkShadow),
   -.25rem -.25rem .5rem var(--lightShadow);
+  box-shadow:  5px 5px 1px #121219,
+  -5px -5px 1px #484665;
   color: var(--color);
+  background: var(--secondary);
+  color: #E0E0E0;
   display: flex;
-  padding: 1.5rem;
-  .cardWrapper {
+  padding: 2rem;
+  box-sizing: border-box;
+  margin: 2rem 0 2rem 1rem;
+  overflow: hidden;
+  .card-wrapper {
     width: 90%;
     height: 100%;
     display: flex;
@@ -40,20 +48,31 @@
           }
         }
       }
+      em {
+        float: right;
+        font-size: 1rem;
+      }
     }
     h2 {
       font-size: 1.1rem;
-      min-height: 2rem;
+      min-height: 4rem;
       overflow: hidden;
       text-overflow: ellipsis;
       margin: 1rem 0;
+      background: #262536;
+      color: #E0E0E0;
+      border-radius: .5rem;
+      padding: .5rem;
     }
     span {
       all: unset;
       display: flex;
-      margin: 1rem 0;
+      margin: .5rem 0;
       h3, h4 {
         font-size: 1.1rem;
+      }
+      h4 {
+        margin-left: .5rem;
       }
     }
   }

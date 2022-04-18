@@ -9,7 +9,7 @@ const projectsSchema = new Schema({
   description: {
     type: String,
     required: true,
-    maxlength: 255,
+    maxlength: 1000,
   },
   customField1: {
     name: { type: String },

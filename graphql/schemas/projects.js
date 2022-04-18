@@ -7,11 +7,14 @@ export const typeDefs = gql`
     name: String
     description: String
     customField1: Json
-    customField2: String
-    customField3: String
-    customField4: String
-    customField5: String
+    customField2: Json
+    customField3: Json
+    customField4: Json
+    customField5: Json
     completed: Boolean
+    createdAt: Json
+    updatedAt: Json
+    userId: String
     _id: ID!
   }
 
@@ -25,24 +28,25 @@ export const typeDefs = gql`
       name: String!
       description: String!
       customField1: Json
-      customField2: String
-      customField3: String
-      customField4: String
-      customField5: String
+      customField2: Json
+      customField3: Json
+      customField4: Json
+      customField5: Json
+      userId: String
       completed: Boolean!
     ): Project
     editProject(
       name: String
       description: String
-      customField1: String
-      customField2: String
-      customField3: String
-      customField4: String
-      customField5: String
+      customField1: Json
+      customField2: Json
+      customField3: Json
+      customField4: Json
+      customField5: Json
       completed: Boolean
     ): Project
     deleteProject(
-      id: ID!
+      _id: ID!
     ): String
   }
 `;

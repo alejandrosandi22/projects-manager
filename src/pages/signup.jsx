@@ -13,19 +13,27 @@ import { setCookies } from 'cookies-next';
 
 import { SIGN_UP_QUERY } from '../../graphql/queries/user';
 import { useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 
 export default function Signup() {
 
   const [ credentials, setCredentials ] = useState({});
   const [ confirmPassword, setConfirmPassword] = useState('');
-  const [ alert, setAlert ] = useState({status: false});
   const [ loading, setLoading ] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleDispatch = (type, payload) => {
+    dispatch({
+      type: type,
+      payload: payload
+    });
+  }
 
   const [ signUp, signUpResult ] = useMutation(SIGN_UP_QUERY, {
     onError: (error) => {
-      setAlert({status: true, type: 'error', message: error.message});
-      loading(false);
+      handleDispatch('@alert/show', {status: true, type: 'error', message: `${error.message}`, seconds: 5});
+      setLoading(false);
     }
   })
 
@@ -41,7 +49,11 @@ export default function Signup() {
       const { value } = signUpResult.data.createUser;
       setCookies('manager-app-projects-user-token', value);
 
-      setAlert({status: true, type: 'success', message: `Welcome! ${credentials.name} ${credentials.lastName}`});
+      handleDispatch(
+        '@alert/show',
+        {status: true, type: 'success', message: `Welcome! ${credentials.name} ${credentials.lastName}`, seconds: 5}
+      );
+
       setLoading(false);
 
       router.push('/dashboard');
@@ -50,14 +62,15 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setAlert(false);
+    handleDispatch('@alert/show', {status: false});
+
     setLoading(true);
 
     if (loading) return;
 
     if (credentials.password !== confirmPassword) {
-      setAlert({status: true, type: 'warning', message: "Confirmed password don't match."});
-      return setTimeout(() => setAlert(false), 5500);
+      console.log('dispatch')
+      handleDispatch('@alert/show', {status: true, type: 'warning', message: "Confirmed password don't match.", seconds: 5},);
     }
 
     signUp({ variables: {
@@ -69,9 +82,6 @@ export default function Signup() {
 
   return (
     <>
-    {
-      alert.status && <Alerts type={alert.type} message={alert.message} seconds={5} /> 
-    }
     <div className={`${styles.switchWrapper}`}>
       <Switch />
     </div>
@@ -91,7 +101,7 @@ export default function Signup() {
           </div>
           <span>
             <button type="button">Cancel</button>
-            <button type="submit" onSubmit={handleSubmit}>Sign Up { loading && <Spinner /> }</button>
+            <button type="submit" onSubmit={handleSubmit}>{ !loading ? 'Sign Up' : `${<Spinner />}...` }</button>
           </span>
         </form>
         <Link href="/signin">

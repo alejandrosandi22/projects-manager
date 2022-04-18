@@ -8,6 +8,8 @@ export default function Input(props) {
       <input required={props.required}
       onChange={props.onChange}
       type={props.type}
+      name={props.name}
+      placeholder={props.placeholder}
       id={props.id} />
     </div>
     </>

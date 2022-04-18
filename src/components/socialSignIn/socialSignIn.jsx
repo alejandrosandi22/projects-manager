@@ -1,23 +1,16 @@
 import Alerts from 'components/alerts/alerts';
 import styles from 'styles/socialSignin.module.scss';
 import { signIn } from 'next-auth/react';
-import { useState } from 'react';
 
 export default function SocialSignin() {
 
-  const [ alert, setAlert ] = useState({state: false});
-
   const handleSignIn = (e) => {
     const { id } = e.target;
-    setAlert({status: true, type: 'success', message: 'Welcome!'});
-    signIn(id);
+    signIn(id, {callbackUrl: '/dashboard'});
   }
 
   return (
     <>
-      {
-        alert.state && <Alerts message={alert.message} type={alert.type} seconds={5}/>
-      }
       <button id="google" onClick={handleSignIn} className={`fab fa-google ${styles.button} ${styles.google}`}></button>
       <button id="facebook" onClick={handleSignIn} className={`fab fa-facebook ${styles.button} ${styles.facebook}`}></button>
       <button id="github" onClick={handleSignIn} className={`fab fa-github ${styles.button} ${styles.github}`}></button>

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from "../../../store/actions";
 
 import styles from 'styles/switch.module.scss';
 
@@ -26,7 +25,7 @@ export default function Switch() {
   return (
     <>
       <input className={`${styles.input} ${styles[mode]}`} ref={themeToggle}
-      onChange={() => actions(dispatch, '@theme/mode', (theme ? false : true))}
+      onChange={() => dispatch({type: '@theme/mode', payload: (theme ? false : true)})}
       type="checkbox"/>
     </>
   );
