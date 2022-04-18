@@ -16,10 +16,11 @@ export const userResolvers = {
       }
     },
     allUsers: async () => {
-      return await User.find().catch((error) => {
+      const users = await User.find().catch((error) => {
         throw new UserInputError(error.message);
       });
-    }
+      return users;
+    },
   },
   Mutation: {
     createUser: async (_root, args) => {

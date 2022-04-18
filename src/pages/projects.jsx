@@ -59,7 +59,7 @@ export default function Completed() {
 
   useEffect(() => {
     if (data) {
-      setCompletedProjects(data.allProjects.map((project) => {
+      setCompletedProjects(data.getAllProjects.map((project) => {
         const { name, description, customField1, customField2, customField3, customField4, customField5, completed, createdAt, updatedAt, _id } = project;
 
         const customFields = [

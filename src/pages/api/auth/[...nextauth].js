@@ -23,6 +23,6 @@ export default NextAuth({
     }),
   ],
   pages: {
-    error: '/signin'
-  }
+    error: '/signin',
+  },
 });

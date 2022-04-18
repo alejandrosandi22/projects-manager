@@ -47,7 +47,7 @@ export default function SignIn() {
 
       setLoading(false);
 
-      router.push('/dashboard', '/dashboard');
+      router.push('/dashboard');
     }
   }, [signInResult.data, error])
 

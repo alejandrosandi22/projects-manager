@@ -19,8 +19,8 @@ export const SINGLE_PROJECT_QUERY = gql`
 `;
 
 export const ALL_PROJECTS_QUERY = gql`
-  query allProjects($completed: Boolean) {
-    allProjects(completed: $completed) {
+  query getAllProjects($completed: Boolean) {
+    getAllProjects(completed: $completed) {
       name
       description
       customField1
