@@ -6,31 +6,26 @@ import { useQuery } from '@apollo/client';
 import { CURRENT_USER_QUERY } from '../../../graphql/queries/user';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../../store/actions';
 
 import Spinner from 'components/spinner/spinner';
+import Alerts from 'components/alerts/alerts';
 
 export default function Layout({ children }) {
   
-  const { theme } = useSelector(state => state);
+  const { theme, alert } = useSelector(state => state);
   const dispatch = useDispatch();
   
   const [ themeMode, setThemeMode ] = useState('lightMode');
 
   const { data: session, status } = useSession();
   const { loading, data } = useQuery(CURRENT_USER_QUERY);
-  
+
   useEffect(() => {
-
-    if (data) actions(dispatch, '@user/registered', data.currentUser);
-
-    if (session) actions(dispatch, '@user/registered', session.user);
-
-    console.log(theme)
-
     setThemeMode(`${theme ? 'darkMode' : 'lightMode'}`);
+    if (data) dispatch({type: '@user/registered', payload: data.currentUser});
+    if (session) dispatch({type: '@user/registered', payload: session.user});
 
-  }, [data, session, theme])
+  }, [theme, data, session])
 
   if (status === 'loading' || loading) {
     return (
@@ -68,6 +63,9 @@ export default function Layout({ children }) {
       <div className={`App ${themeMode}`}>
         {children}
       </div>
+      {
+        alert.status && <Alerts type={alert.type} message={alert.message} seconds={alert.seconds}/>
+      }
     </>
   );
 }

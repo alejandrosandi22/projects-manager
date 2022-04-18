@@ -1,0 +1,20 @@
+.button {
+  border: none;
+  background: var(--primary);
+  color: var(--color);
+  box-shadow: .15rem .15rem .5rem var(--darkShadow),
+  -.15rem -.15rem .5rem var(--lightShadow);
+  font-size: 1.1rem;
+  width: 7rem;
+  height: 2.3rem;
+  justify-self: center;
+  align-self: center;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(105%);
+  }
+  &:active {
+    box-shadow: inset .15rem .15rem .5rem var(--darkShadow),
+    inset -.15rem -.15rem .5rem var(--lightShadow);
+  }
+}

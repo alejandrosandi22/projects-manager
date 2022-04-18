@@ -21,16 +21,14 @@ export default function Nav() {
   const handleSignOut = () => {
     removeCookies('manager-app-projects-user-token');
     signOut();
-    router.push('/signin');
+    router.push('/signin', '/signin');
   }
 
   useEffect(() => {
     const { pathname } = router;
     if (pathname === '/dashboard') setSelected('0');
     if (pathname === '/projects') setSelected('1');
-    if (pathname === '/completed') setSelected('2');
-    if (pathname === '/help') setSelected('3');
-    if (pathname === '/profile') setSelected('4');
+    if (pathname === '/profile') setSelected('2');
   }, []);
 
   return (
@@ -55,35 +53,19 @@ export default function Nav() {
             </li>
           </a>
         </Link>
-        <Link href="/completed">
-          <a>
-            <li id="2" onClick={handleClick} className={`${selected === '2' && styles['active']}`}>
-              <i className="fal fa-check-square"></i>
-              <span>Completed</span>
-            </li>
-          </a>
-        </Link>
-        <Link href="/completed">
-          <a>
-            <li id="3" onClick={handleClick} className={`${selected === '3' && styles['active']}`}>
-              <i className="fal fa-question"></i>
-              <span>Help</span>
-            </li>
-          </a>
-        </Link>
         <Link href="/profile">
           <a>
-            <li id="4" onClick={handleClick} className={`${selected === '4' && styles['active']}`}>
+            <li id="2" onClick={handleClick} className={`${selected === '2' && styles['active']}`}>
               <i className='fal fa-user'></i>
               <span>Profile</span>
             </li>
           </a>
         </Link>
         <a>
-          <li id="5" onClick={(e) => {
+          <li id="3" onClick={(e) => {
             handleSignOut();
             handleClick(e);
-          }} className={`${selected === '5' && styles['active']}}`}>
+          }} className={`${selected === '3' && styles['active']}}`}>
             <i className="fal fa-sign-out"></i>
             <span>Sign Out</span>
           </li>

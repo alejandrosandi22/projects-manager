@@ -16,7 +16,9 @@ export const userResolvers = {
       }
     },
     allUsers: async () => {
-      return await User.find().then((res) => console.log(res).catch((error) => console.error(error)));
+      return await User.find().catch((error) => {
+        throw new UserInputError(error.message);
+      });
     }
   },
   Mutation: {

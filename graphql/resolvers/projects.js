@@ -16,11 +16,12 @@ export const projectResolvers = {
 
       if (args.completed) return await Projects.find({completed: true});
 
-      return await Projects.find();
+      return await Projects.find().sort('name');
     },
   },
   Mutation: {
     createProject: async (_root, args) => {
+
       try {
         const newProject = new Projects({...args, completed: false});
         await newProject.save();
@@ -30,8 +31,8 @@ export const projectResolvers = {
       }
     },
     deleteProject: async (_root, args) => {
-      const { id } = args;
-      const { name } = await Projects.findOneAndDelete({id});
+      const { _id } = args;
+      const { name } = await Projects.findOneAndDelete({_id});
       return `${name} project deleted`;
     }
   }

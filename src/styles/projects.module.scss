@@ -1,0 +1,39 @@
+.section {
+  position: relative;
+  float: right;
+  width: 80%;
+  height: 100%;
+  overflow-x: hidden;
+  .panel {
+    width: 80%;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    div {
+      all: unset;
+      width: 15rem;
+      height: auto;
+      display: flex;
+      align-items: center;
+      label {
+        margin-right: .8rem;
+      }
+      input {
+        width: 12rem;
+      }
+    }
+    button {
+      width: 4rem;
+      
+      &:nth-child(2) {
+        width: 12rem;
+      }
+    }
+  }
+  .cardContainer {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+}

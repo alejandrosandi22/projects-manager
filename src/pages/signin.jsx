@@ -5,7 +5,6 @@ import Link from 'next/link'
 import styles from 'styles/signin.module.scss';
 
 import Switch from 'components/switch/switch';
-import Alerts from 'components/alerts/alerts';
 import Spinner from 'components/spinner/spinner';
 import Input from 'components/input/input';
 import SocialSignin from 'components/socialSignIn/socialSignIn';
@@ -14,32 +13,43 @@ import { useMutation } from '@apollo/client';
 import { SIGN_IN_QUERY } from '../../graphql/queries/user';
 
 import { setCookies } from 'cookies-next';
+import { useDispatch } from 'react-redux';
 
 export default function SignIn() {
 
   const [ credentials, setCredentials ] = useState();
-  const [ alert, setAlert ] = useState({email: '', password: '',status: false});
   const [ loading, setLoading ] = useState(false);
+  const dispatch = useDispatch();
   const router = useRouter();
+
+  const { error } = router.query;
 
   const [ signIn, signInResult ] = useMutation(SIGN_IN_QUERY, {
     onError: (error) => {
-      setAlert({status: true, type: 'error', message: `${error.message}`});
+      dispatch({
+        type: '@alert/show',
+        payload: {status: true, type: 'error', message: `${error.message}`, seconds: 5},
+      });
       setLoading(false);
     }
   });
 
   useEffect(() => {
+    if (error) console.log(error)
     if (signInResult.data) {
       const { value } = signInResult.data.signIn;
       setCookies('manager-app-projects-user-token', value);
 
-      setAlert({status: true, type: 'success', message: 'Welcome!'});
+      dispatch({
+        type: '@alert/show',
+        payload: {status: true, type: 'success', message: 'Welcome!', seconds: 5},
+      });
+
       setLoading(false);
 
-      router.push('/dashboard');
+      router.push('/dashboard', '/dashboard');
     }
-  }, [signInResult.data])
+  }, [signInResult.data, error])
 
   const handleSetCredentials = (e) => {
     setCredentials({
@@ -50,7 +60,10 @@ export default function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setAlert({...alert, status: false});
+    dispatch({
+      type: '@alert/show',
+      payload: {status: false},
+    });
     setLoading(true);
 
     signIn({ variables: {email: credentials.email, password: credentials.password} });
@@ -58,9 +71,6 @@ export default function SignIn() {
 
   return(
     <>
-    {
-      alert.status && <Alerts type={alert.type} message={alert.message} seconds={5} /> 
-    }
     <div className={styles.switchWrapper}>
       <Switch />
     </div>
@@ -69,7 +79,7 @@ export default function SignIn() {
         <form onSubmit={handleSubmit}>
           <Input required={true} onChange={handleSetCredentials} type="email" label="Email" id="email"/>
           <Input required={true} onChange={handleSetCredentials} type="password" label="Password" id="password"/>
-          <button onSubmit={handleSubmit}>Sign In { loading && <Spinner /> }</button>
+          <button onSubmit={handleSubmit}>{ !loading ? 'Sign In' : <Spinner /> }</button>
         </form>
         <span>
           <Link href="/recovery">

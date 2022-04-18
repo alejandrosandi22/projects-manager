@@ -6,7 +6,8 @@
   bottom: 0;
   margin: auto 0;
   width: 5rem;
-  height: 80%;
+  min-height: 370px;
+  max-height: 60%;
   background: var(--primary);
   border-radius: 0 2rem 2rem 0;
   box-shadow: .2rem .2rem .5rem var(--darkShadow),
