@@ -1,6 +1,6 @@
+import { UserInputError } from 'apollo-server-micro';
 import dbConnect from '../../utils/mongoose';
 import Projects from '../../models/Projects';
-import { UserInputError } from 'apollo-server-micro';
 
 dbConnect();
 
@@ -8,32 +8,35 @@ export const projectResolvers = {
   Query: {
     singleProject: async (_root, args) => {
       const { _id } = args;
-      return await Projects.findById(_id).catch((error) => {
-        throw new UserInputError(error.message)
+      const project = await Projects.findById(_id).catch((error) => {
+        throw new UserInputError(error.message);
       });
+      return project;
     },
-    allProjects: async (_root, args) => {
+    getAllProjects: async (_root, args) => {
+      if (args.completed) {
+        const allCompletedrojects = await Projects.find({ completed: true });
+        return allCompletedrojects;
+      }
 
-      if (args.completed) return await Projects.find({completed: true});
-
-      return await Projects.find().sort('name');
+      const allProjects = await Projects.find().sort('name');
+      return allProjects;
     },
   },
   Mutation: {
     createProject: async (_root, args) => {
-
       try {
-        const newProject = new Projects({...args, completed: false});
+        const newProject = new Projects({ ...args, completed: false });
         await newProject.save();
         return newProject;
       } catch (error) {
-        throw new UserInputError(error.message)
+        throw new UserInputError(error.message);
       }
     },
     deleteProject: async (_root, args) => {
       const { _id } = args;
-      const { name } = await Projects.findOneAndDelete({_id});
+      const { name } = await Projects.findOneAndDelete({ _id });
       return `${name} project deleted`;
-    }
-  }
-}
+    },
+  },
+};

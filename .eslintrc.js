@@ -23,5 +23,8 @@ module.exports = {
     'import/named': 'off',
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
+    'consistent-return': 'off',
+    'no-param-reassign': 'off',
+    'default-param-last': 'off',
   },
 };

@@ -32,7 +32,7 @@ const projectsSchema = new Schema({
     content: { type: String },
   },
   completed: {
-    type: Boolean
+    type: Boolean,
   },
 }, {
   timestamps: true,

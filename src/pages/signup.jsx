@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link'
 import styles from 'styles/signup.module.scss';
 
-import Alerts from 'components/alerts/alerts'
 import Input from 'components/input/input';
 import Switch from 'components/switch/switch';
 import SocialSignin from 'components/socialSignIn/socialSignIn';
@@ -63,14 +62,13 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     handleDispatch('@alert/show', {status: false});
-
     setLoading(true);
 
     if (loading) return;
 
     if (credentials.password !== confirmPassword) {
-      console.log('dispatch')
-      handleDispatch('@alert/show', {status: true, type: 'warning', message: "Confirmed password don't match.", seconds: 5},);
+      setLoading(false);
+      return handleDispatch('@alert/show', {status: true, type: 'warning', message: "Confirmed password don't match.", seconds: 5},);
     }
 
     signUp({ variables: {
@@ -101,7 +99,7 @@ export default function Signup() {
           </div>
           <span>
             <button type="button">Cancel</button>
-            <button type="submit" onSubmit={handleSubmit}>{ !loading ? 'Sign Up' : `${<Spinner />}...` }</button>
+            <button type="submit" onSubmit={handleSubmit}>{ !loading ? 'Sign Up' : <Spinner /> }</button>
           </span>
         </form>
         <Link href="/signin">

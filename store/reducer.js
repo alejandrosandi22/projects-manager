@@ -1,4 +1,4 @@
-import { getCookie, setCookies } from 'cookies-next'; 
+import { getCookie, setCookies } from 'cookies-next';
 
 const initialState = {
   user: null,
@@ -18,21 +18,25 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-
   switch (action.type) {
     case '@user/registered':
-      if (action.payload) return state = { ...state, user: action.payload };
+      if (action.payload) {
+        state = { ...state, user: action.payload };
+        return state;
+      }
       break;
-    
+
     case '@theme/mode':
       setCookies('theme', action.payload);
-      return state = { ...state, theme: action.payload };
+      state = { ...state, theme: action.payload };
+      return state;
 
     case '@modal/open':
-      return {...state, modals: {[action.payload.name]: action.payload.value}};
+      return { ...state, modals: { [action.payload.name]: action.payload.value } };
 
     case '@alert/show':
-      return state = { ...state, alert: action.payload };
+      state = { ...state, alert: action.payload };
+      return state;
 
     default:
       break;
