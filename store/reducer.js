@@ -11,7 +11,10 @@ const initialState = {
   },
   modals: {
     createProject: false,
-    deleteProject: false,
+    deleteProject: {
+      status: false,
+      data: { id: null, name: null },
+    },
     deleteUser: false,
     filter: false,
   },
@@ -32,7 +35,7 @@ const reducer = (state = initialState, action) => {
       return state;
 
     case '@modal/open':
-      return { ...state, modals: { [action.payload.name]: action.payload.value } };
+      return { ...state, modals: { ...state.modals, [action.payload.name]: action.payload.value } };
 
     case '@alert/show':
       state = { ...state, alert: action.payload };

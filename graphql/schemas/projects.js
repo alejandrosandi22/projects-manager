@@ -47,6 +47,6 @@ export const typeDefs = gql`
     ): Project
     deleteProject(
       _id: ID!
-    ): String
+    ): Project
   }
 `;

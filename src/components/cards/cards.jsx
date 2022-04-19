@@ -2,13 +2,25 @@ import { useEffect, useRef } from 'react';
 import styles from 'styles/cards.module.scss';
 
 export default function Cards(props) {
+
   const checkbox = useRef(<input/>);
 
+  const openDeleteProjectModal = (id, name) => {
+    props.modalsEvents(
+      'deleteProject',
+      {
+        status: true,
+        data: {id,name}}
+    )
+  }
+
   useEffect(() => {
-    checkbox.current.checked = true
-  }, [])
+    if (props.completed) checkbox.current.checked = true;
+  }, [props])
+
     return(
       <>
+      {console.log('renderizado')}
       <div className={styles.card}>
         <div className={styles['card-wrapper']}>
           <h1><input ref={checkbox}
@@ -30,7 +42,7 @@ export default function Cards(props) {
         </div>
         <span>
           <button className={`fas fa-edit ${styles.edit}`}></button>
-          <button onClick={() => props.showDeleteProjectModal(props.id, props.name)} className={`fas fa-trash ${styles.trash}`}></button>
+          <button onClick={() => openDeleteProjectModal(props.id, props.name)} className={`fas fa-trash ${styles.trash}`}></button>
         </span>
       </div>
     </>

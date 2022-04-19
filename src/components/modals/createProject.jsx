@@ -3,10 +3,6 @@ import Input from 'components/input/input';
 import { useEffect, useRef, useState } from 'react';
 import styles from 'styles/modal/createProject.module.scss';
 
-import { useMutation } from '@apollo/client';
-import { CREATE_PROJECT } from '../../../graphql/queries/projects';
-import { useDispatch } from 'react-redux';
-
 export function CustomField({getCredentials, handleRemoveField, removedFields, id}) {
   return(
     <>
@@ -24,38 +20,22 @@ export function CustomField({getCredentials, handleRemoveField, removedFields, i
   );
 }
 
-export default function CreateProject() {
+export default function CreateProject({ modalsEvents, createdProject }) {
 
-  const [ customFields, setCustomFields ] = useState();
-  const inputData = useRef({});
   const [ removedFields, setRemoveFields ] = useState([0,1,2,3,4]);
+  const [ customFields, setCustomFields ] = useState();
+  const [ hidde, setHidde ] = useState(false);
+  const inputData = useRef({});
   const fieldsNumber = useRef(5);
   const fieldId = useRef(null);
-  const dispatch = useDispatch();
-
-  const closeModal = () => {
-    dispatch({
-      type: '@modal/open',
-      payload: {name: 'createProject', value: false}
-    });
-  }
-
-  const [ createdProject, createdProjectResult ] = useMutation(CREATE_PROJECT, {
-    onError: (error) => {
-      console.error(error)
-    }
-  });
 
   const handleRemoveField = (id) => {
-    console.log(id)
     fieldId.current = id;
     setRemoveFields([...removedFields, fieldId.current]);
   }
 
   useEffect(() => {
-
-    if (createdProjectResult.data) closeModal();
-    removedFields.sort()
+     removedFields.sort()
 
     const items = [];
     
@@ -65,10 +45,9 @@ export default function CreateProject() {
 
     setCustomFields(items);
 
-  }, [removedFields, createdProjectResult.data])
+  }, [removedFields])
 
   const getCredentials = (e) => {
-    console.log(e.target.name + ':' + e.target.value)
     inputData.current = {
       ...inputData.current,
       [e.target.name]: e.target.value
@@ -102,9 +81,17 @@ export default function CreateProject() {
     createdProject({variables: {...organizedData}});
   }
 
+  const closeModal = () => {
+    setHidde(true);
+    setTimeout(() => {
+      setHidde(false);
+      modalsEvents('createProject', false);
+    }, 300);
+  }
+
   return(
     <>
-      <section className={styles.section}>
+      <section className={`${styles.section} ${hidde && styles.hidde}`}>
         <span>
           <main>
             <h3>Create New Project</h3>
