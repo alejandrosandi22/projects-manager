@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: show-bg .3s both;
   span {
     padding: 2rem 2rem 3rem 2rem;
     width: 30rem;
@@ -18,6 +19,7 @@
     flex-direction: column;
     border-radius: 1rem;
     box-shadow: .25rem .25rem .5rem var(--darkShadow);
+    animation: show-modal .3s both;
     main {
       position: relative;
       width: 100%;
@@ -78,5 +80,51 @@
         background: #B3312A;
       }
     }
+  }
+}
+.hidde {
+  animation: hidde-bg .3s both;
+  span {
+    animation: hidde-modal .3s both;
+  }
+}
+
+@keyframes show-bg {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes show-modal {
+  0% {
+    opacity: 0;
+    transform: translateY(-5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hidde-bg {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hidde-modal {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5rem);
   }
 }

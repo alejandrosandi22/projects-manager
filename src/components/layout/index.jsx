@@ -9,16 +9,36 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Spinner from 'components/spinner/spinner';
 import Alerts from 'components/alerts/alerts';
+import DeleteProject from 'components/modals/deleteProject';
+import CreateProject from 'components/modals/createProject';
 
 export default function Layout({ children }) {
   
-  const { theme, alert } = useSelector(state => state);
+  const { theme, alert, modals } = useSelector((state) => state);
   const dispatch = useDispatch();
   
   const [ themeMode, setThemeMode ] = useState('lightMode');
+  const [ modalToShow, setModalToShow ] = useState(<></>);
 
   const { data: session, status } = useSession();
   const { loading, data } = useQuery(CURRENT_USER_QUERY);
+
+
+  useEffect(() => {
+
+    const {
+      createProject,
+      deleteProject,
+      deleteUser,
+      filter
+    } = modals;
+    
+    if (createProject) return setModalToShow(<CreateProject />);
+    if (deleteProject.status) return setModalToShow(<DeleteProject />);
+    return setModalToShow(<></>);
+
+
+  }, [modals])
 
   useEffect(() => {
     setThemeMode(`${theme ? 'darkMode' : 'lightMode'}`);
@@ -66,6 +86,7 @@ export default function Layout({ children }) {
       {
         alert.status && <Alerts type={alert.type} message={alert.message} seconds={alert.seconds}/>
       }
+
     </>
   );
 }

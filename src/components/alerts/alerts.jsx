@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from 'styles/alerts.module.scss';
 
 export default function Alerts (props) {
 
   const [ alertData, setAlertData ] = useState({state: ''});
+  const dispatch = useDispatch();
 
   const typeAlert = () => {
     switch (props.type) {
@@ -27,6 +29,10 @@ export default function Alerts (props) {
   useEffect(() => {
     typeAlert();
     setTimeout(() => {
+      dispatch({
+        type: '@alert/show',
+        payload: {status: false}
+      });
       return setAlertData({...alertData, state: 'hidden'});
     }, props.seconds * 1000);
 

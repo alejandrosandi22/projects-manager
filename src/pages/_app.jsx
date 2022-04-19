@@ -10,18 +10,16 @@ export default function MyApp({ session, Component, pageProps }) {
   const { pathname } = useRouter();
  
   return(
-    <>
-      <Providers session={session} >
-        <Layout>
-            {
-              pathname !== '/signin'  
-              && pathname !== '/signup' 
-              && pathname !== '/recovery' 
-              && pathname !== '/' && <Nav />
-            }
-            <Component {...pageProps} />
-        </Layout>
-      </Providers>
-    </>
+    <Providers session={session} >
+      <Layout>
+          {
+            pathname !== '/signin'  
+            && pathname !== '/signup' 
+            && pathname !== '/recovery' 
+            && pathname !== '/' && <Nav />
+          }
+          <Component {...pageProps} />
+      </Layout>
+    </Providers>
   );
 }

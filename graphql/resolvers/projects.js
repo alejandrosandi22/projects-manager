@@ -19,7 +19,7 @@ export const projectResolvers = {
         return allCompletedrojects;
       }
 
-      const allProjects = await Projects.find().sort('name');
+      const allProjects = await Projects.find().sort({ updatedAt: -1 });
       return allProjects;
     },
   },
