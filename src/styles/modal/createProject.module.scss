@@ -5,6 +5,7 @@
   height: 100%;
   background: rgba(50, 50, 50, .25);
   animation: show-bg .3s both;
+  overflow: hidden;
   span {
     position: absolute;
     left: 0;
@@ -22,7 +23,6 @@
     flex-direction: column;
     border-radius: 1rem;
     box-shadow: .25rem .25rem .5rem var(--darkShadow);
-    overflow-y: scroll;
     animation: show-modal .3s both;
     main {
       padding: .5rem 0 3rem 3rem;
@@ -67,7 +67,10 @@
         align-items: center;
       }
       .customFilesContainer {
-        width: 100%;
+        width: 35rem;
+        height: 12rem;
+        margin: 1rem 0;
+        overflow-y: scroll;
         .customFileWrapper {
           display: flex;
           margin: 2rem 0;
@@ -85,6 +88,12 @@
             }
           }
         }
+      }
+      .buttonsContainer {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
       }
     }
   }

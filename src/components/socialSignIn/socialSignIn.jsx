@@ -1,4 +1,3 @@
-import Alerts from 'components/alerts/alerts';
 import styles from 'styles/socialSignin.module.scss';
 import { signIn } from 'next-auth/react';
 

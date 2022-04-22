@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from 'styles/alerts.module.scss';
 
-export default function Alerts (props) {
+export default function Alert(props) {
 
   const [ alertData, setAlertData ] = useState({state: ''});
   const dispatch = useDispatch();

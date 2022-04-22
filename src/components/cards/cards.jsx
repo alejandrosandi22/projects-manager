@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from 'styles/cards.module.scss';
 
-export default function Cards(props) {
+function Cards(props) {
 
   const checkbox = useRef(<input/>);
 
@@ -10,7 +10,8 @@ export default function Cards(props) {
       'deleteProject',
       {
         status: true,
-        data: {id,name}}
+        data: {id,name}
+      }
     )
   }
 
@@ -20,7 +21,6 @@ export default function Cards(props) {
 
     return(
       <>
-      {console.log('renderizado')}
       <div className={styles.card}>
         <div className={styles['card-wrapper']}>
           <h1><input ref={checkbox}
@@ -48,3 +48,5 @@ export default function Cards(props) {
     </>
   );
 }
+
+export default React.memo(Cards);
