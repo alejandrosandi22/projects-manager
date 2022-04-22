@@ -1,23 +1,41 @@
 import styles from 'styles/modal/deleteProject.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
+import { ALL_PROJECTS_QUERY, DELETE_PROJECT } from '../../../graphql/queries/projects';
+import { useMutation } from '@apollo/client';
 
-export default function DeleteProject({ modalsEvents, deleteProject, deleteProjectResult }) {
+export default function DeleteProject({ modalsEvents }) {
 
   const [ hidde, setHidde ] = useState(false);
+  const user = useSelector((state) => state.user);
   const { data } = useSelector((state) => state.modals.deleteProject);
   const dispatch = useDispatch();
 
-  const handleDeleteProject = async () => {
-    await deleteProject({variables: {id: data.id}})
-    if (deleteProjectResult) {
+  const [ deleteProject ] = useMutation(DELETE_PROJECT, {
+    refetchQueries: () => [{
+      query: ALL_PROJECTS_QUERY,
+      variables: {
+        completed: false,
+        userId: user._id,
+      }
+    }],
+    onError: () => {
+      dispatch({
+        type: '@alert/show',
+        payload: {status: true, type: 'error', message: 'An error has occurred', seconds: 5},
+      });
+    },
+    onCompleted: () => {
       dispatch({
         type: '@alert/show',
         payload: {status: true, type: 'success', message: `${data.name} deleted successfully`, seconds: 5}
       });
-
       closeModal();
-    }
+    },
+  });
+
+  const handleDeleteProject = async () => {
+    await deleteProject({variables: {id: data.id}})
   }
 
   const closeModal = () => {

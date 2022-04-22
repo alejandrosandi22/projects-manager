@@ -19,8 +19,8 @@ export const typeDefs = gql`
   }
 
   type Query {
-    singleProject(_id: ID!): Project
-    getAllProjects(completed: Boolean): [Project]
+    singleProject(_id: ID!, userId: String): Project
+    getAllProjects(completed: Boolean, userId: String): [Project]
   }
 
   type Mutation {

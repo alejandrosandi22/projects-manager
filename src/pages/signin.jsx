@@ -35,9 +35,8 @@ export default function SignIn() {
   });
 
   useEffect(() => {
-    if (error) console.log(error)
     if (signInResult.data) {
-      const { value } = signInResult.data.signIn;
+      const { value, id } = signInResult.data.signIn;
       setCookies('manager-app-projects-user-token', value);
 
       dispatch({

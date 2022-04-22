@@ -19,9 +19,10 @@ export const SIGN_UP_QUERY = gql`
 export const CURRENT_USER_QUERY = gql`
   query currentUser {
     currentUser {
-       name
+      name
       email
       image
+      _id
     }
   }
 `;

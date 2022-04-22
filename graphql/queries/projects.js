@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const SINGLE_PROJECT_QUERY = gql`
-  query singleProject($id: ID!) {
-    singleProject(_id: $id) {
+  query singleProject($id: ID!, $userId: String) {
+    singleProject(_id: $id, userId: $userId) {
       name
       description
       customField1
@@ -19,8 +19,8 @@ export const SINGLE_PROJECT_QUERY = gql`
 `;
 
 export const ALL_PROJECTS_QUERY = gql`
-  query getAllProjects($completed: Boolean) {
-    getAllProjects(completed: $completed) {
+  query getAllProjects($completed: Boolean, $userId: String) {
+    getAllProjects(completed: $completed, userId: $userId) {
       name
       description
       customField1
@@ -28,6 +28,7 @@ export const ALL_PROJECTS_QUERY = gql`
       customField3
       customField4
       customField5
+      userId,
       completed
       createdAt
       updatedAt
@@ -44,6 +45,7 @@ export const CREATE_PROJECT = gql`
   $customField3: Json,
   $customField4: Json,
   $customField5: Json,
+  $userId: String,
   $completed: Boolean!) {
     createProject(name: $name,
     description: $description,
@@ -52,6 +54,7 @@ export const CREATE_PROJECT = gql`
     customField3: $customField3,
     customField4: $customField4,
     customField5: $customField5,
+    userId: $userId,
     completed: $completed) {
       name
       description
@@ -60,6 +63,7 @@ export const CREATE_PROJECT = gql`
       customField3
       customField4
       customField5
+      userId
       completed
     }
   }

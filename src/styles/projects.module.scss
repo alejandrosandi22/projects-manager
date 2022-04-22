@@ -35,5 +35,19 @@
     width: 100%;
     height: auto;
     overflow: hidden;
+    .empty {
+      width: 100%;
+      height: calc(100vh - 8rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      i, h1 {
+        color: var(--color);
+        font-size: 3em;
+        margin: .5rem 0;
+        font-weight: 300;
+      }
+    }
   }
 }

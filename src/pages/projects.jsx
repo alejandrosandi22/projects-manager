@@ -1,45 +1,26 @@
-import Cards from 'components/cards/cards';
 import { getSession } from 'next-auth/react';
-import styles from 'styles/projects.module.scss';
 
-import { ALL_PROJECTS_QUERY, DELETE_PROJECT, CREATE_PROJECT } from '../../graphql/queries/projects';
+import { ALL_PROJECTS_QUERY } from '../../graphql/queries/projects';
 
-import { useMutation, useQuery } from '@apollo/client';
-import { useState, useEffect, useRef } from 'react';
+import { useQuery } from '@apollo/client';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import moment from 'moment';
+import Cards from 'components/cards/cards';
 import Button from 'components/button/button';
-import CreateProject from 'components/modals/createProject';
 import Input from 'components/input/input';
-import { useDispatch, useSelector } from 'react-redux';
-import DeleteProject from 'components/modals/deleteProject';
+import Spinner from 'components/spinner/spinner';
+import styles from 'styles/projects.module.scss';
+import moment from 'moment';
 
-export default function Completed() {
+export default function Projects() {
 
-  const [ allProjects, setAllProjects ] = useState(null);
-  const projects = useRef();
+  const user = useSelector((state) => state.user);
+  const [ allProjects, setAllProjects ] = useState([]);
+  const { loading, data } = useQuery(ALL_PROJECTS_QUERY, {variables: {completed: false, userId: user ? user._id : ''}});
 
-  const { modals } = useSelector(state => state);
   const dispatch = useDispatch();
-  
-  const { loading, data } = useQuery(ALL_PROJECTS_QUERY, {variables: {completed: false}});
-  console.log('DATA =>', data)
-
-
-  const [ deleteProject, deleteProjectResult ] = useMutation(DELETE_PROJECT, {
-    onError: () => {
-      dispatch({
-        type: '@alert/show',
-        payload: {status: true, type: 'error', message: 'An error has occurred', seconds: 5},
-      });
-    }
-  });
-
-  const [ createdProject, createdProjectResult ] = useMutation(CREATE_PROJECT, {
-    onError: (error) => {
-      console.error(error)
-    }
-  });
 
   const modalsEvents = (name, value) => {
     dispatch({
@@ -48,37 +29,7 @@ export default function Completed() {
     });
   }
 
-  const loadProjects = () => {
-    if (data) {
-      setAllProjects(
-        data.getAllProjects.map((project) => {
-          const { name,
-            description,
-            customField1,
-            customField2,
-            customField3,
-            customField4,
-            customField5,
-            completed,
-            createdAt,
-            updatedAt,
-            _id } = project;
-
-            const customFields = [
-              Object.keys(customField1).length !== 0 && customField1,
-              Object.keys(customField2).length !== 0 && customField2,
-              Object.keys(customField3).length !== 0 && customField3,
-              Object.keys(customField4).length !== 0 && customField4,
-              Object.keys(customField5).length !== 0 && customField5,
-            ]
-        })
-      );
-    }
-  }
-
   useEffect(() => {
-    if (createdProjectResult.data) modalsEvents('createProject', false);
-
     if (data) {
       setAllProjects(data.getAllProjects.map((project) => {
 
@@ -98,22 +49,16 @@ export default function Completed() {
         id={project._id}
         createdAt={moment(project.createdAt).format('L')}
         updatedAt={moment(project.updatedAt, "YYYYMMDD").fromNow()}
-        deleteProjectResult={deleteProjectResult.data}
-        createdProjectResult={createdProjectResult.data}
         modalsEvents={modalsEvents} />
       }));
     }
 
-  }, [data, deleteProjectResult.data, createdProjectResult.data]);
+  }, [data])
 
-  if (loading) return <></>
+  if (loading) return <Spinner />
 
   return (
     <>
-    { modals.deleteProject.status && <DeleteProject modalsEvents={modalsEvents}
-    deleteProject={deleteProject}
-    deleteProjectResult={deleteProjectResult} /> }
-    { modals.createProject && <CreateProject modalsEvents={modalsEvents} createdProject={createdProject} /> }
       <section className={styles.section}>
         <main className={styles.panel}>
           <Input type='text' label='Search:' placeholder='Project...' />
@@ -121,7 +66,14 @@ export default function Completed() {
           <Button className='fal fa-sliders-h'/>
         </main>
         <div className={styles.cardContainer}>
-        { allProjects }
+        {
+          allProjects.length > 0
+          ? allProjects
+          : <div className={styles.empty}>
+              <i className='fal fa-folder-open'></i>
+              <h1>No Proyects</h1>
+            </div>
+        }
         </div>
       </section>
     </>

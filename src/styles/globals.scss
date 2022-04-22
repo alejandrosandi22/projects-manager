@@ -23,6 +23,21 @@
 
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: var(--third);
+}
+/* ::-webkit-scrollbar-thumb:hover {
+  background: var(--third);
+} */
+
 html,
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
