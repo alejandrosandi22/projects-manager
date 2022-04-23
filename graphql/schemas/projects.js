@@ -36,14 +36,20 @@ export const typeDefs = gql`
       completed: Boolean!
     ): Project
     editProject(
-      name: String
-      description: String
+      name: String!
+      description: String!
       customField1: Json
       customField2: Json
       customField3: Json
       customField4: Json
       customField5: Json
-      completed: Boolean
+      userId: String!
+      completed: Boolean!
+      _id: ID!
+    ): Project
+    completeProject(
+      completed: Boolean!
+      _id: ID!
     ): Project
     deleteProject(
       _id: ID!

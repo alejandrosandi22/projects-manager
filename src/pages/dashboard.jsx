@@ -8,23 +8,32 @@ import { ALL_PROJECTS_QUERY } from '../../graphql/queries/projects';
 
 export default function Dashboard() {
 
-  const user = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state);
   const [ completed, setCompleted ] = useState([]);
   const [ statistics, setStatistics ] = useState({});
   const [ latest, setLatest ] = useState([]);
 
-  const { loading, data } = useQuery(ALL_PROJECTS_QUERY, {
+  const { loading, refetch, data } = useQuery(ALL_PROJECTS_QUERY, {
     variables: {
       filter: {
         sort: 'latest', completed: false
       },
       userId: user && user._id,
-    }
+    },
   })
 
   useEffect(() => {
     let totalProjects = [];
     let completedProjects = [];
+
+    refetch(ALL_PROJECTS_QUERY, {
+      variables: {
+        filter: {
+          sort: 'latest', completed: false
+        },
+        userId: user && user._id,
+      },
+    });
 
     if (data) {
       setLatest(data.getAllProjects[0]);
@@ -39,7 +48,7 @@ export default function Dashboard() {
 
     setStatistics({
       "projects": totalProjects.length,
-      "completed": Math.trunc((completedProjects.length * 100) / totalProjects.length)
+      "completed": Math.trunc((completedProjects.length * 100) / totalProjects.length),
     })
   }, [data])
 

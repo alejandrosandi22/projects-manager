@@ -105,7 +105,7 @@ export default function Projects() {
       <section className={styles.section}>
         <main className={styles.panel}>
           <Input onChange={handleSearch} type='text' label='Search:' placeholder='Project...' />
-          <Button onClick={() => modalsEvents('createProject', true)} caption='Create Project' />
+          <Button onClick={() => modalsEvents('createProject', {status: true, functionality: 'create'})} caption='Create Project' />
           <Button onClick={() => {
             modalsEvents(
               'filter',

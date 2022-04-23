@@ -10,7 +10,8 @@ export default function Input(props) {
       type={props.type}
       name={props.name}
       placeholder={props.placeholder}
-      id={props.id} />
+      id={props.id}
+      ref={props.reference} />
     </div>
     </>
   );

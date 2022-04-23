@@ -1,10 +1,12 @@
+import { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Button from 'components/button/button';
 import Input from 'components/input/input';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styles from 'styles/modals/createProject.module.scss';
-import { ALL_PROJECTS_QUERY, CREATE_PROJECT } from '../../../graphql/queries/projects';
+
+import { ALL_PROJECTS_QUERY, CREATE_PROJECT, EDIT_PROJECT } from '../../../graphql/queries/projects';
 
 export function CustomField({getCredentials, handleRemoveField, removedFields, id}) {
   return(
@@ -32,8 +34,11 @@ export default function CreateProject({ modalsEvents }) {
   const fieldsNumber = useRef(5);
   const fieldId = useRef(null);
   const user = useSelector((state) => state.user);
+  const createProject = useSelector((state) => state.modals.createProject)
   const { filter } = useSelector((state) => state.modals);
   const dispatch = useDispatch();
+
+  const inputName = useRef();
 
   const [ createdProject ] = useMutation(CREATE_PROJECT, {
     refetchQueries: () => [{
@@ -41,10 +46,12 @@ export default function CreateProject({ modalsEvents }) {
       variables: {
         filter: {sort: filter.sort, completed: filter.completed},
         userId: user._id,
-      }
+      },
+      options: {
+        awaitRefetchQueries: true
+      },
     }],
-    onError: (error) => {
-      console.error(error)
+    onError: () => {
       dispatch({
         type: '@alert/show',
         payload: {status: true, type: 'error', message: 'An error has occurred', seconds: 5},
@@ -59,13 +66,39 @@ export default function CreateProject({ modalsEvents }) {
     },
   });
 
+  const [ editProject ] = useMutation(EDIT_PROJECT, {
+    refetchQueries: () => [{
+      query: ALL_PROJECTS_QUERY,
+      variables: {
+        filter: {sort: filter.sort, completed: filter.completed},
+        userId: user._id,
+      },
+      options: {
+        awaitRefetchQueries: true
+      },
+    }],
+    onError: () => {
+      dispatch({
+        type: '@alert/show',
+        payload: {status: true, type: 'error', message: 'An error has occurred', seconds: 5},
+      });
+    },
+    onCompleted: () => {
+      dispatch({
+        type: '@alert/show',
+        payload: {status: true, type: 'success', message: 'Project updated successfully', seconds: 5}
+      });
+      closeModal();
+    },
+  });
+
   const handleRemoveField = (id) => {
     fieldId.current = id;
     setRemoveFields([...removedFields, fieldId.current]);
   }
 
   useEffect(() => {
-     removedFields.sort()
+    removedFields.sort();
 
     const items = [];
     
@@ -78,6 +111,7 @@ export default function CreateProject({ modalsEvents }) {
   }, [removedFields])
 
   const getCredentials = (e) => {
+
     inputData.current = {
       ...inputData.current,
       userId: user._id,
@@ -93,7 +127,29 @@ export default function CreateProject({ modalsEvents }) {
     removedFields.sort();
   }
 
-  const hanldeCreateNewProject = (e) => {
+  const handleUpdateProject = (e) => {
+    e.preventDefault();
+
+    const data = { ...createProject.data, ...createProject.data.customFields, ...inputData.current} ;
+
+    const organizedData = {
+      name: data.name,
+      description: data.description,
+      customField1: {name: data.customFieldName0, content: data.customFieldContent0},
+      customField2: {name: data.customFieldName1, content: data.customFieldContent1},
+      customField3: {name: data.customFieldName2, content: data.customFieldContent2},
+      customField4: {name: data.customFieldName3, content: data.customFieldContent3},
+      customField5: {name: data.customFieldName4, content: data.customFieldContent4},
+      userId: data.userId,
+      completed: !data.completed && false,
+      id: data.id,
+    }
+
+    editProject({variables: {...organizedData}});
+
+  }
+
+   const hanldeCreateNewProject = (e) => {
     e.preventDefault();
 
     const data = inputData.current;
@@ -117,7 +173,7 @@ export default function CreateProject({ modalsEvents }) {
     setHidde(true);
     setTimeout(() => {
       setHidde(false);
-      modalsEvents('createProject', false);
+      modalsEvents('createProject', {status: false});
     }, 300);
   }
 
@@ -126,12 +182,19 @@ export default function CreateProject({ modalsEvents }) {
       <section className={`${styles.section} ${hidde && styles.hidde}`}>
         <span>
           <main>
-            <h3>Create New Project</h3>
+            <h3>
+              {
+                createProject &&
+                createProject.functionality === 'create'
+                ? 'Create New Project'
+                : 'Update Project'
+              }
+            </h3>
             <i onClick={() => closeModal()} className='fal fa-times'></i>
           </main>
           <form onSubmit={(e) => hanldeCreateNewProject(e)}>
             <div className={styles.requiredInputs}>
-              <Input required={true} onChange={getCredentials} type="text" name="name" id="name" label="Project Name: "/>
+              <Input reference={inputName} required={true} onChange={getCredentials} type="text" name="name" id="name" label="Project Name: "/>
               <Input required={true} onChange={getCredentials} type="text" name="description" id="description" label="Description: " />
             </div>
             <p>
@@ -141,8 +204,12 @@ export default function CreateProject({ modalsEvents }) {
               { customFields }
             </div>
             <div className={styles.buttonsContainer}>
-              <Button type='button' caption="Cancel" />
-              <Button type='submit' onSubmit={(e) => hanldeCreateNewProject(e)} caption="Save" />
+              <Button onClick={() => closeModal()} type='button' caption="Cancel" />
+              {
+                createProject.functionality === 'create'
+                ? <Button type='submit' onSubmit={(e) => handleUpdateProject(e)} caption='Create' />
+                : <Button type='submit' onSubmit={(e) => handleUpdateProject(e)} caption='Update' />
+              }
             </div>
           </form>
         </span>

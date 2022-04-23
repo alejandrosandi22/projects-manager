@@ -17,7 +17,7 @@ export default function Modals() {
   return(
     <>
     { modals.deleteProject.status && <DeleteProject modalsEvents={modalsEvents} /> }
-    { modals.createProject && <CreateProject modalsEvents={modalsEvents} /> }
+    { modals.createProject.status && <CreateProject modalsEvents={modalsEvents} /> }
     { modals.filter.status && <Filter modalsEvents={modalsEvents} /> }
     </>
   );
