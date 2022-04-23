@@ -14,15 +14,14 @@ export const projectResolvers = {
       return project;
     },
     getAllProjects: async (_root, args) => {
-      
       const { filter } = args;
-      let sortValue = {updatedAt: -1};
+      let sortValue = { updatedAt: -1 };
 
-      if (filter.sort === 'latest') sortValue = {createdAt: -1};
-      if (filter.sort === 'oldest') sortValue = {createdAt: 1};
-      if (filter.sort === 'name') sortValue = {name: 1};
+      if (filter.sort === 'latest') sortValue = { createdAt: -1 };
+      if (filter.sort === 'oldest') sortValue = { createdAt: 1 };
+      if (filter.sort === 'name') sortValue = { name: 1 };
 
-      const currentUserProjects = await Projects.find({userId: args.userId}).sort(sortValue)
+      const currentUserProjects = await Projects.find({ userId: args.userId }).sort(sortValue);
 
       if (filter.completed) {
         const allCompletedrojects = currentUserProjects.filter((project) => project.completed);
@@ -41,6 +40,18 @@ export const projectResolvers = {
       } catch (error) {
         throw new UserInputError(error.message);
       }
+    },
+    editProject: async (_root, args) => {
+      const { _id } = args;
+      delete args._id;
+      const updatedProject = await Projects.findByIdAndUpdate(_id, {...args});
+
+      return updatedProject;
+    },
+    completeProject: async (_root, args) => {
+      const { _id } = args;
+      const updatedProject = await Projects.findByIdAndUpdate(_id, {completed: args.completed});
+      return updatedProject;
     },
     deleteProject: async (_root, args) => {
       const { _id } = args;

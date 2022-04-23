@@ -33,7 +33,7 @@ const projectsSchema = new Schema({
   },
   userId: {
     type: String,
-    required: true
+    required: true,
   },
   completed: {
     type: Boolean,

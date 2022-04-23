@@ -10,7 +10,10 @@ const initialState = {
     seconds: 5,
   },
   modals: {
-    createProject: false,
+    createProject: {
+      status: false,
+      functionality: 'create',
+    },
     deleteProject: {
       status: false,
       data: { id: null, name: null },
@@ -19,7 +22,7 @@ const initialState = {
     filter: {
       status: false,
       sort: '',
-      completed: false
+      completed: false,
     },
   },
 };
