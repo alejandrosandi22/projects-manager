@@ -18,8 +18,8 @@ export const projectResolvers = {
       const { filter } = args;
       let sortValue = {updatedAt: -1};
 
-      if (filter.sort === 'latest') sortValue = {createdAt: 1};
-      if (filter.sort === 'oldest') sortValue = {createdAt: -1};
+      if (filter.sort === 'latest') sortValue = {createdAt: -1};
+      if (filter.sort === 'oldest') sortValue = {createdAt: 1};
       if (filter.sort === 'name') sortValue = {name: 1};
 
       const currentUserProjects = await Projects.find({userId: args.userId}).sort(sortValue)

@@ -81,9 +81,9 @@ export default function SignIn() {
           <button onSubmit={handleSubmit}>{ !loading ? 'Sign In' : <Spinner /> }</button>
         </form>
         <span>
-          <Link href="/recovery">
+{/*           <Link href="/recovery">
             <a>Forget your password?</a>
-          </Link>
+          </Link> */}
           <Link href="/signup">
             <a>You don't hava an account?</a>
           </Link>

@@ -2,7 +2,7 @@ import { getSession } from 'next-auth/react';
 import { ALL_PROJECTS_QUERY } from '../../graphql/queries/projects';
 
 import { useQuery } from '@apollo/client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -14,6 +14,9 @@ import styles from 'styles/projects.module.scss';
 import moment from 'moment';
 
 export default function Projects() {
+
+  const search = useRef([]);
+  const [ foundProjects, setFoundProjects ] = useState(<></>);
 
   const user = useSelector((state) => state.user);
   const { filter } = useSelector((state) => state.modals);
@@ -60,13 +63,48 @@ export default function Projects() {
 
   }, [data, filter])
 
+  const handleSearch = (e) => {
+    const textToFind = e.target.value.toLowerCase();
+
+    if (!data) return;
+
+    search.current = data.getAllProjects.filter((project) => {
+      const name = project.name.toLowerCase();
+      const description = project.description.toLowerCase();
+      return (name.includes(textToFind) || description.includes(textToFind)) 
+    })
+
+    setFoundProjects(search.current.map((project) => {
+        const customFields = []
+
+        for (let i = 1; i <= 5; i++) {
+          if (Object.keys(eval(`project.customField${i}`)).length !== 0 ) {
+            customFields.push(eval(`project.customField${i}`));
+          }
+        }
+
+        return <Cards key={project._id}
+        name={project.name}
+        description={project.description}
+        customFields={customFields}
+        completed={project.completed} 
+        id={project._id}
+        createdAt={moment(project.createdAt).format('L')}
+        updatedAt={moment(project.updatedAt, "YYYYMMDD").fromNow()}
+        modalsEvents={modalsEvents} />
+      })
+    )
+
+
+  }
+
   if (loading) return <Spinner />
 
   return (
     <>
       <section className={styles.section}>
         <main className={styles.panel}>
-          <Input type='text' label='Search:' placeholder='Project...' />
+          <Input onChange={handleSearch} type='text' label='Search:' placeholder='Project...' />
           <Button onClick={() => modalsEvents('createProject', true)} caption='Create Project' />
           <Button onClick={() => {
             modalsEvents(
@@ -75,14 +113,16 @@ export default function Projects() {
           } className='fal fa-sliders-h'/>
         </main>
         <div className={styles.cardContainer}>
-        {
-          allProjects.length > 0
-          ? allProjects
-          : <div className={styles.empty}>
-              <i className='fal fa-folder-open'></i>
-              <h1>No Proyects</h1>
-            </div>
-        }
+          {
+            search.current.length > 0
+            ? foundProjects
+            : allProjects.length > 0
+            ? allProjects
+            : <div className={styles.empty}>
+                <i className='fal fa-folder-open'></i>
+                <h1>No Proyects</h1>
+              </div>
+          }
         </div>
       </section>
     </>

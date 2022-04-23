@@ -1,0 +1,156 @@
+.section {
+  width: 90%;
+  height: 100%;
+  float: right;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas: 
+  "statistics completed"
+  "latest completed";
+  .statistics {
+    position: relative;
+    grid-area: statistics;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    table {
+      position: absolute;
+      top: 7rem;
+      width: 80%;
+      height: 50%;
+      border-collapse: collapse;
+      caption {
+        position: fixed;
+        top: 2rem;
+        color: var(--color);
+        text-align: start;
+        font-size: 2rem;
+        font-weight: 500;
+        margin: 0 0 2rem 0;
+      }
+      tr {
+        th,td {
+          border: 1px solid var(--darkShadow);
+          box-shadow: 0 .25rem .25rem var(--darkShadow);
+        }
+        th {
+          font-size: 1.2rem;
+          height: 3rem;
+          color: var(--color);
+          font-weight: 500;
+        }
+        td {
+          width: 50%;
+          text-align: center;
+          font-size: 2rem;
+          color: var(--color);
+        }
+      }
+    }
+  }
+  .completed {
+    position: relative;
+    grid-area: completed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2 {
+      position: absolute;
+      top: 2rem;
+      color: var(--color);
+      font-size: 2rem;
+      font-weight: 500;
+      text-align: start;
+      width: 80%;
+    }
+    .cardsWrapper {
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      top: 7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: .25rem .25rem .5rem var(--darkShadow),
+      -.25rem -.25rem .5rem var(--lightShadow);
+      border: 1px solid var(--darkShadow);
+      box-shadow: 0 .25rem .25rem var(--darkShadow);
+      overflow-y: scroll;
+      span {
+        width: 80%;
+      }
+      .card {
+        width: 100%;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        margin: 1rem 0;
+        border-bottom: .1rem solid var(--color);
+        &:last-child {
+          border-bottom: none;
+        }
+        h3 {
+          color: var(--color);
+          width: 50%;
+          text-align: center;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+        a {
+          width: 50%;
+          text-align: center;
+            color: var(--color);
+            opacity: .7;
+            &:hover {
+              opacity: 1;
+            }
+          }
+      }
+    }
+  }
+  .latest {
+    position: relative;
+    grid-area: latest;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h2 {
+      position: absolute;
+      top: 2rem;
+      color: var(--color);
+      font-size: 2rem;
+      font-weight: 500;
+      margin: 0 0 2rem 0;
+      text-align: start;
+      width: 80%;
+    }
+    .latestCard {
+      width: 80%;
+      height: 10rem;
+      background: var(--secondary);
+      padding: .5rem 1.5rem;
+      box-sizing: border-box;
+      box-shadow: .25rem .25rem .5rem var(--darkShadow),
+      -.25rem -.25rem .5rem var(--lightShadow);
+      h3 {
+        margin: 1rem 0;
+        font-size: 1.5rem;
+        color: #E0E0E0;
+      }
+      h4 {
+        font-size: 1.1rem;
+        min-height: 4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 1rem 0;
+        background: #262536;
+        color: #E0E0E0;
+        border-radius: .5rem;
+        padding: .5rem;
+        overflow-y: scroll;
+      }
+    }
+  }
+}
