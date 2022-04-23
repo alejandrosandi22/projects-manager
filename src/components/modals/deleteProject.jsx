@@ -1,4 +1,4 @@
-import styles from 'styles/modal/deleteProject.module.scss';
+import styles from 'styles/modals/deleteProject.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { ALL_PROJECTS_QUERY, DELETE_PROJECT } from '../../../graphql/queries/projects';
@@ -15,7 +15,7 @@ export default function DeleteProject({ modalsEvents }) {
     refetchQueries: () => [{
       query: ALL_PROJECTS_QUERY,
       variables: {
-        completed: false,
+        filter: {sort: '', completed: false},
         userId: user._id,
       }
     }],

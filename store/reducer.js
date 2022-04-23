@@ -16,7 +16,11 @@ const initialState = {
       data: { id: null, name: null },
     },
     deleteUser: false,
-    filter: false,
+    filter: {
+      status: false,
+      sort: '',
+      completed: false
+    },
   },
 };
 

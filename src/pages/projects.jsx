@@ -1,5 +1,4 @@
 import { getSession } from 'next-auth/react';
-
 import { ALL_PROJECTS_QUERY } from '../../graphql/queries/projects';
 
 import { useQuery } from '@apollo/client';
@@ -17,8 +16,14 @@ import moment from 'moment';
 export default function Projects() {
 
   const user = useSelector((state) => state.user);
+  const { filter } = useSelector((state) => state.modals);
   const [ allProjects, setAllProjects ] = useState([]);
-  const { loading, data } = useQuery(ALL_PROJECTS_QUERY, {variables: {completed: false, userId: user ? user._id : ''}});
+  const { loading, data } = useQuery(ALL_PROJECTS_QUERY, {
+    variables: {
+      filter: {sort: filter.sort, completed: filter.completed},
+      userId: user ? user._id : ''
+    }
+  });
 
   const dispatch = useDispatch();
 
@@ -53,7 +58,7 @@ export default function Projects() {
       }));
     }
 
-  }, [data])
+  }, [data, filter])
 
   if (loading) return <Spinner />
 
@@ -63,7 +68,11 @@ export default function Projects() {
         <main className={styles.panel}>
           <Input type='text' label='Search:' placeholder='Project...' />
           <Button onClick={() => modalsEvents('createProject', true)} caption='Create Project' />
-          <Button className='fal fa-sliders-h'/>
+          <Button onClick={() => {
+            modalsEvents(
+              'filter',
+              {status: true,sort: filter.sort, completed: filter.completed})}
+          } className='fal fa-sliders-h'/>
         </main>
         <div className={styles.cardContainer}>
         {

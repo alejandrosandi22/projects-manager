@@ -14,10 +14,18 @@ export const projectResolvers = {
       return project;
     },
     getAllProjects: async (_root, args) => {
-      const currentUserProjects = await Projects.find({userId: args.userId}).sort({ updatedAt: -1 });
+      
+      const { filter } = args;
+      let sortValue = {updatedAt: -1};
 
-      if (args.completed) {
-        const allCompletedrojects = currentUserProjects.filter((project) => project.completed)
+      if (filter.sort === 'latest') sortValue = {createdAt: 1};
+      if (filter.sort === 'oldest') sortValue = {createdAt: -1};
+      if (filter.sort === 'name') sortValue = {name: 1};
+
+      const currentUserProjects = await Projects.find({userId: args.userId}).sort(sortValue)
+
+      if (filter.completed) {
+        const allCompletedrojects = currentUserProjects.filter((project) => project.completed);
         return allCompletedrojects;
       }
 

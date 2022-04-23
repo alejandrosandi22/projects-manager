@@ -3,7 +3,7 @@ import Button from 'components/button/button';
 import Input from 'components/input/input';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from 'styles/modal/createProject.module.scss';
+import styles from 'styles/modals/createProject.module.scss';
 import { ALL_PROJECTS_QUERY, CREATE_PROJECT } from '../../../graphql/queries/projects';
 
 export function CustomField({getCredentials, handleRemoveField, removedFields, id}) {
@@ -32,17 +32,19 @@ export default function CreateProject({ modalsEvents }) {
   const fieldsNumber = useRef(5);
   const fieldId = useRef(null);
   const user = useSelector((state) => state.user);
+  const { filter } = useSelector((state) => state.modals);
   const dispatch = useDispatch();
 
   const [ createdProject ] = useMutation(CREATE_PROJECT, {
     refetchQueries: () => [{
       query: ALL_PROJECTS_QUERY,
       variables: {
-        completed: false,
+        filter: {sort: filter.sort, completed: filter.completed},
         userId: user._id,
       }
     }],
-    onError: () => {
+    onError: (error) => {
+      console.error(error)
       dispatch({
         type: '@alert/show',
         payload: {status: true, type: 'error', message: 'An error has occurred', seconds: 5},
