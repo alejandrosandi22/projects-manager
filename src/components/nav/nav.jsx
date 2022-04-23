@@ -28,7 +28,7 @@ export default function Nav() {
     const { pathname } = router;
     if (pathname === '/dashboard') setSelected('0');
     if (pathname === '/projects') setSelected('1');
-    if (pathname === '/profile') setSelected('2');
+    if (pathname === '/settings') setSelected('2');
   }, []);
 
   return (
@@ -53,11 +53,11 @@ export default function Nav() {
             </li>
           </a>
         </Link>
-        <Link href="/profile">
+        <Link href="/settings">
           <a>
             <li id="2" onClick={handleClick} className={`${selected === '2' && styles['active']}`}>
-              <i className='fal fa-user'></i>
-              <span>Profile</span>
+              <i className='fal fa-cog'></i>
+              <span>Settings</span>
             </li>
           </a>
         </Link>

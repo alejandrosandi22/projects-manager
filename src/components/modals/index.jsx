@@ -1,6 +1,7 @@
 import CreateProject from './createProject';
-import { useDispatch, useSelector } from 'react-redux';
 import DeleteProject from "./deleteProject";
+import Filter from './filter';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Modals() {
   const { modals } = useSelector((state) => state);
@@ -17,6 +18,7 @@ export default function Modals() {
     <>
     { modals.deleteProject.status && <DeleteProject modalsEvents={modalsEvents} /> }
     { modals.createProject && <CreateProject modalsEvents={modalsEvents} /> }
+    { modals.filter.status && <Filter modalsEvents={modalsEvents} /> }
     </>
   );
 }

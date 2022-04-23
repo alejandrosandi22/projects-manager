@@ -1,6 +1,6 @@
 import styles from 'styles/profile.module.scss';
 import { useState } from 'react';
-import { getSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
@@ -11,7 +11,7 @@ import { removeCookies } from 'cookies-next';
 import DeleteUser from 'components/modals/deleteUser';
 import Switch from 'components/switch/switch';
 
-export default function Profile() {
+export default function Settings() {
 
   const router = useRouter();
   const { user } = useSelector(state => state);
