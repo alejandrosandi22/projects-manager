@@ -13,6 +13,7 @@
   box-sizing: border-box;
   margin: 2rem 0 2rem 1rem;
   overflow: hidden;
+  animation: opacity .5s both;
   .card-wrapper {
     width: 90%;
     display: flex;
@@ -98,5 +99,14 @@
       background: #FF4861;
       margin: .8rem 0 0 0;
     }
+  }
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

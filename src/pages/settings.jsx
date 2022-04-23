@@ -10,6 +10,7 @@ import { removeCookies } from 'cookies-next';
 
 import DeleteUser from 'components/modals/deleteUser';
 import Switch from 'components/switch/switch';
+import Spinner from 'components/spinner/spinner';
 
 export default function Settings() {
 
@@ -29,6 +30,8 @@ export default function Settings() {
     signOut();
     router.push('/signin');
   }
+
+  if (!user) return <Spinner />
 
   return (
     <>
