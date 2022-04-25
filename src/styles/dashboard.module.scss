@@ -11,6 +11,7 @@
   "tag tag"
   "latest completed"
   "latest completed";
+  animation: opacity .5s both;
   .tag {
     position: relative;
     grid-area: tag;
@@ -81,7 +82,7 @@
     }
     .cardsWrapper {
       width: 80%;
-      height: 80%;
+      height: 70%;
       top: 7rem;
       display: flex;
       flex-direction: column;
@@ -111,12 +112,12 @@
         a {
           width: 50%;
           text-align: center;
-            color: var(--color);
-            opacity: .7;
-            &:hover {
-              opacity: 1;
-            }
+          color: var(--color);
+          opacity: .7;
+          &:hover {
+            opacity: 1;
           }
+        }
       }
     }
   }
@@ -171,5 +172,45 @@
         overflow-y: scroll;
       }
     }
+    .noProjects {
+      width: 90%;
+      height: 14rem;
+      color: var(--color);
+      background: var(--secondary);
+      color: #E0E0E0;
+      color: var(--color);
+      background: var(--primary);
+      background: var(--third);
+      box-sizing: border-box;
+      margin: 2rem 0 2rem 1rem;
+      overflow: hidden;
+      box-shadow: 0 10px 17px 0px var(--shadow);
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      animation: opacity .5s both;
+      h6 {
+        font-size: 2rem;
+        font-weight: 500;
+      }
+      a {
+        color: var(--color);
+        font-size: 1rem;
+        opacity: .7;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

@@ -2,14 +2,15 @@ import { removeCookies } from 'cookies-next';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import styles from 'styles/nav.module.scss';
-import Switch from '../switch/switch';
 import { useSelector } from 'react-redux'; 
+import Link from 'next/link';
+import Switch from '../switch/switch';
+import styles from 'styles/nav.module.scss';
 
-export default function Nav() {
+export default function Nav(props) {
 
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
+  const state  = useSelector((state) => state)
   const [ selected, setSelected ] = useState('0');
   const [ toggle, setToggle ] = useState(false);
   const router = useRouter();
@@ -23,14 +24,16 @@ export default function Nav() {
   const handleSignOut = () => {
     removeCookies('manager-app-projects-user-token');
     signOut();
-    router.push('/signin', '/signin');
+    router.push('/signin');
   }
+
+
 
   useEffect(() => {
     const { pathname } = router;
     if (pathname === '/dashboard') setSelected('0');
     if (pathname === '/projects') setSelected('1');
-  }, []);
+  }, [state]);
 
   return(
     <>
@@ -38,7 +41,6 @@ export default function Nav() {
       <div className={`${styles.toggle} ${toggle && styles.active}`} onClick={() => setToggle(!toggle)} ></div>
     </div>
       <nav className={styles.nav}>
-        <h2 onClick={() => handleSignOut()}>Dashboard</h2>
         <ul>
           <li>{ user && user.name }<i className='fal fa-angle-down'></i></li>
           <li><img onError={({currentTarget}) => currentTarget.src = '/default-user.png'} src={user ? user.image : '/default-user.png'} alt='user' /></li>

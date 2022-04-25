@@ -1,13 +1,8 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import { getSession, useSession } from 'next-auth/react';
 
-import { useQuery } from '@apollo/client';
-import { CURRENT_USER_QUERY } from '../../../graphql/queries/user';
+import { useSelector } from 'react-redux';
 
-import { useDispatch, useSelector } from 'react-redux';
-
-import Spinner from 'components/spinner/spinner';
 import Alerts from 'components/alerts';
 import Modals from 'components/modals';
 

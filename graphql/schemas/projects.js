@@ -15,7 +15,7 @@ export const typeDefs = gql`
     createdAt: Json
     updatedAt: Json
     userId: String
-    _id: ID!
+    _id: ID
   }
 
   type Query {
