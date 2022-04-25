@@ -1,51 +1,61 @@
 .section {
-  width: 90%;
-  height: 100%;
-  float: right;
+  position: absolute;
+  width: calc(100% - 15rem);
+  height: calc(100% - 4rem);
+  right: 0;
+  bottom: 0;  
   display: grid;
   grid-template-columns: 55% 45%;
-  grid-template-rows: 50% 50%;
-  grid-template-areas: 
-  "statistics completed"
+  grid-template-rows: 30% 35% 35%;
+  grid-template-areas:
+  "tag tag"
+  "latest completed"
   "latest completed";
-  .statistics {
+  .tag {
     position: relative;
-    grid-area: statistics;
+    grid-area: tag;
     display: flex;
-    justify-content: center;
     align-items: center;
-    table {
+    margin: 1rem;
+    div {
       position: absolute;
-      top: 7rem;
-      width: 80%;
-      height: 50%;
-      border-collapse: collapse;
-      caption {
-        position: fixed;
-        top: 2rem;
-        color: var(--color);
-        text-align: start;
-        font-size: 2rem;
-        font-weight: 500;
-        margin: 0 0 2rem 0;
+      width: 32%;
+      height: 100%;
+      border-radius: .2rem;
+      background: var(--third);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      &:nth-child(1) {
+        left: 0;
       }
-      tr {
-        th,td {
-          border: 1px solid var(--darkShadow);
-          box-shadow: 0 .25rem .25rem var(--darkShadow);
-        }
-        th {
-          font-size: 1.2rem;
-          height: 3rem;
-          color: var(--color);
-          font-weight: 500;
-        }
-        td {
-          width: 50%;
-          text-align: center;
+      &:nth-child(2) {
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+      &:nth-child(3) {
+        right: 0;
+      }
+      span {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 90%;
+        h4 {
+          align-self: baseline;
           font-size: 2rem;
           color: var(--color);
         }
+        h5 {
+          font-size: 1.2rem;
+          color: var(--color);
+        }
+      }
+      i {
+        font-size: 2.5rem;
+        color: var(--color);
       }
     }
   }
@@ -55,9 +65,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: var(--third);
+    margin: 1rem 1rem 2rem 1rem;
+    border-radius: .2rem;
+    transition: .5s;
+    overflow: hidden;
     h2 {
-      position: absolute;
-      top: 2rem;
+      margin: 2rem 0 1rem 0;
+      height: 3rem;
       color: var(--color);
       font-size: 2rem;
       font-weight: 500;
@@ -65,17 +80,12 @@
       width: 80%;
     }
     .cardsWrapper {
-      position: absolute;
       width: 80%;
       height: 80%;
       top: 7rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: .25rem .25rem .5rem var(--darkShadow),
-      -.25rem -.25rem .5rem var(--lightShadow);
-      border: 1px solid var(--darkShadow);
-      box-shadow: 0 .25rem .25rem var(--darkShadow);
       overflow-y: scroll;
       span {
         width: 80%;
@@ -114,22 +124,26 @@
     position: relative;
     grid-area: latest;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    background: var(--third);
+    margin: 1rem 1rem 2rem 1rem;
+    border-radius: .2rem;
+    transition: .5s;
+    overflow: hidden;
     h2 {
-      position: absolute;
-      top: 2rem;
+      margin: 2rem 0 1rem 0;
+      height: 3rem;
       color: var(--color);
       font-size: 2rem;
       font-weight: 500;
-      margin: 0 0 2rem 0;
       text-align: start;
       width: 80%;
     }
     .latestCard {
       width: 80%;
-      height: 10rem;
-      background: var(--secondary);
+      height: 70%;
+      background: var(--fourth);
       padding: .5rem 1.5rem;
       box-sizing: border-box;
       box-shadow: .25rem .25rem .5rem var(--darkShadow),
@@ -139,13 +153,18 @@
         font-size: 1.5rem;
         color: #E0E0E0;
       }
+      h5 {
+        margin: 1rem 0;
+        font-size: 1.1rem;
+        color: #E0E0E0;
+      }
       h4 {
         font-size: 1.1rem;
-        min-height: 4rem;
+        height: 60%;
         overflow: hidden;
         text-overflow: ellipsis;
         margin: 1rem 0;
-        background: #262536;
+        background: var(--secondary);
         color: #E0E0E0;
         border-radius: .5rem;
         padding: .5rem;

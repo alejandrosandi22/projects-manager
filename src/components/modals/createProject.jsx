@@ -51,7 +51,8 @@ export default function CreateProject({ modalsEvents }) {
         awaitRefetchQueries: true
       },
     }],
-    onError: () => {
+    onError: (error) => {
+      console.error(error);
       dispatch({
         type: '@alert/show',
         payload: {status: true, type: 'error', message: 'An error has occurred', seconds: 5},

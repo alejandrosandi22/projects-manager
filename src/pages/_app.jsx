@@ -5,12 +5,12 @@ import 'styles/globals.scss';
 
 import { useRouter } from 'next/router';
 
-export default function MyApp({ session, Component, pageProps }) {
+export default function MyApp({ session, Component, pageProps, user }) {
 
   const { pathname } = useRouter();
- 
+
   return(
-    <Providers session={session} >
+    <Providers session={session}>
       <Layout>
           {
             pathname !== '/signin'  

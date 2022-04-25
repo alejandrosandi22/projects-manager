@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 
 import { useQuery } from '@apollo/client';
 import { CURRENT_USER_QUERY } from '../../../graphql/queries/user';
@@ -15,41 +15,11 @@ import Modals from 'components/modals';
 export default function Layout({ children }) {
   
   const theme = useSelector((state) => state.theme);
-  const dispatch = useDispatch();
-  
   const [ themeMode, setThemeMode ] = useState('lightMode');
-
-  const { data: session, status } = useSession();
-  const { loading, data } = useQuery(CURRENT_USER_QUERY);
 
   useEffect(() => {
     setThemeMode(`${theme ? 'darkMode' : 'lightMode'}`);
-    if (data) dispatch({type: '@user/registered', payload: data.currentUser});
-    if (session) dispatch({type: '@user/registered', payload: session.user});
-
-  }, [theme, data, session])
-
-  if (status === 'loading' || loading) {
-    return (
-      <>
-      <div className='spinner-wrapper'>
-        <Spinner />
-      </div>
-      <style jsx>
-      {`
-        .spinner-wrapper{
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-      `}
-      </style>
-      </>
-    );
-  }
+  }, [theme])
 
   return(
     <>

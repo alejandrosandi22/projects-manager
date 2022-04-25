@@ -31,8 +31,10 @@ export const userResolvers = {
         const newUser = await new User({ ...args, password: HashPassword });
 
         const userForToken = {
+          name: args.name,
+          image: args.image ? args.image : '',
           email: args.email,
-          id: newUser._id,
+          id: user._id,
         };
 
         const token = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
@@ -58,6 +60,8 @@ export const userResolvers = {
         if (!doMatch) throw new UserInputError('Incorrect credentials');
 
         const userForToken = {
+          name: user.name,
+          image: user.image ? user.image : '',
           email: args.email,
           id: user._id,
         };
