@@ -1,19 +1,22 @@
-import { useQuery } from '@apollo/client';
 import Spinner from 'components/spinner/spinner';
 import { getSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import styles from 'styles/dashboard.module.scss';
-import { ALL_PROJECTS_QUERY } from '../../graphql/queries/projects';
-import moment from 'moment';
 import Cards from 'components/cards/cards';
-import jwt from 'jsonwebtoken';
+import { ALL_PROJECTS_QUERY } from '../../graphql/queries/projects';
 import { useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/client';
+import moment from 'moment';
+import jwt from 'jsonwebtoken';
+import styles from 'styles/dashboard.module.scss';
+import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 export default function Dashboard({ user }) {
 
   const [ completed, setCompleted ] = useState([]);
   const [ statistics, setStatistics ] = useState({});
   const [ latest, setLatest ] = useState([]);
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const modalsEvents = (name, value) => {
@@ -56,7 +59,7 @@ export default function Dashboard({ user }) {
 
       setCompleted(onlyCompletedProjects.map((project, index) => {
         completedProjects.push(index);
-        return <Card key={project._id} name={project.name} />
+        return <CardCompleted key={project._id} name={project.name} />
       }))
 
     }
@@ -66,7 +69,7 @@ export default function Dashboard({ user }) {
       "completed": onlyCompletedProjects.length,
       "percentage": Math.trunc((completedProjects.length * 100) / totalProjects.length),
     })
-  }, [data])
+  }, [data, state])
 
 
   if (loading) return <Spinner />
@@ -109,8 +112,13 @@ export default function Dashboard({ user }) {
         <h2>Latest Project</h2>
         {
           latest
-          ? <Cards modalsEvents={modalsEvents} name={latest.name} description={latest.description} createdAt={moment(latest.createdAt).format("YYYY/MM/DD")} />
-          : <Cards name={'No Projects'} description={''} />
+          ? <Cards name={latest.name}
+          description={latest.description}
+          id={latest._id}
+          completed={latest.completed}
+          createdAt={moment(latest.createdAt).format("YYYY/MM/DD")}
+          modalsEvents={modalsEvents} />
+          : <NoProjects />
         }
         
       </div>
@@ -118,11 +126,24 @@ export default function Dashboard({ user }) {
   );
 }
 
-export function Card({ name }) {
+export function CardCompleted({ name }) {
   return(
     <div className={styles.card}>
       <h3>{ name }</h3>
       <a href="/projects">See project</a>
+    </div>
+  );
+}
+
+export function NoProjects() {
+  return(
+    <div className={styles.noProjects}>
+      <h6>No Projects</h6>
+      <Link href='/projects'>
+        <a>
+          Create new Project
+        </a>
+      </Link>
     </div>
   );
 }

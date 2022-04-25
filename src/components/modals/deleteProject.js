@@ -1,23 +1,24 @@
 import styles from 'styles/modals/deleteProject.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { ALL_PROJECTS_QUERY, DELETE_PROJECT } from '../../../graphql/queries/projects';
 import { useMutation } from '@apollo/client';
+import { useDispatch, useSelector } from 'react-redux';
+import { ALL_PROJECTS_QUERY, DELETE_PROJECT } from '../../../graphql/queries/projects';
 
 export default function DeleteProject({ modalsEvents }) {
 
   const [ hidde, setHidde ] = useState(false);
   const user = useSelector((state) => state.user);
   const { data } = useSelector((state) => state.modals.deleteProject);
+  const filter = useSelector((state) => state.modals.filter);
   const dispatch = useDispatch();
 
   const [ deleteProject ] = useMutation(DELETE_PROJECT, {
     refetchQueries: () => [{
       query: ALL_PROJECTS_QUERY,
       variables: {
-        filter: {sort: '', completed: false},
-        userId: user._id,
-      }
+        filter: {sort: filter.sort, completed: filter.completed},
+        userId: user.id,
+      },
     }],
     onError: () => {
       dispatch({

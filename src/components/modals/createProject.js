@@ -37,7 +37,6 @@ export default function CreateProject({ modalsEvents }) {
   const createProject = useSelector((state) => state.modals.createProject)
   const { filter } = useSelector((state) => state.modals);
   const dispatch = useDispatch();
-
   const inputName = useRef();
 
   const [ createdProject ] = useMutation(CREATE_PROJECT, {
@@ -45,10 +44,7 @@ export default function CreateProject({ modalsEvents }) {
       query: ALL_PROJECTS_QUERY,
       variables: {
         filter: {sort: filter.sort, completed: filter.completed},
-        userId: user._id,
-      },
-      options: {
-        awaitRefetchQueries: true
+        userId: user.id,
       },
     }],
     onError: (error) => {
@@ -72,7 +68,7 @@ export default function CreateProject({ modalsEvents }) {
       query: ALL_PROJECTS_QUERY,
       variables: {
         filter: {sort: filter.sort, completed: filter.completed},
-        userId: user._id,
+        userId: user.id,
       },
       options: {
         awaitRefetchQueries: true
@@ -112,26 +108,32 @@ export default function CreateProject({ modalsEvents }) {
   }, [removedFields])
 
   const getCredentials = (e) => {
-
     inputData.current = {
       ...inputData.current,
-      userId: user._id,
       [e.target.name]: e.target.value
     }
   }
 
   const addField = () => {
-
     const fieldsLength = removedFields.length
 
     setRemoveFields(removedFields.slice(1,fieldsLength));
     removedFields.sort();
   }
 
-  const handleUpdateProject = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const data = { ...createProject.data, ...createProject.data.customFields, ...inputData.current} ;
+    let data = {};
+
+    if (createProject.functionality === 'create') {
+      alert('create');
+      data = inputData.current;
+    }
+    if (createProject.functionality === 'edit') {
+      alert('edit')
+      data = { ...createProject.data, ...createProject.data.customFields, ...inputData.current};
+    }
 
     const organizedData = {
       name: data.name,
@@ -141,33 +143,13 @@ export default function CreateProject({ modalsEvents }) {
       customField3: {name: data.customFieldName2, content: data.customFieldContent2},
       customField4: {name: data.customFieldName3, content: data.customFieldContent3},
       customField5: {name: data.customFieldName4, content: data.customFieldContent4},
-      userId: data.userId,
-      completed: !data.completed && false,
+      userId: user.id,
+      completed: false,
       id: data.id,
     }
 
-    editProject({variables: {...organizedData}});
-
-  }
-
-   const hanldeCreateNewProject = (e) => {
-    e.preventDefault();
-
-    const data = inputData.current;
-
-    const organizedData = {
-      name: data.name,
-      description: data.description,
-      customField1: {name: data.customFieldName0, content: data.customFieldContent0},
-      customField2: {name: data.customFieldName1, content: data.customFieldContent1},
-      customField3: {name: data.customFieldName2, content: data.customFieldContent2},
-      customField4: {name: data.customFieldName3, content: data.customFieldContent3},
-      customField5: {name: data.customFieldName4, content: data.customFieldContent4},
-      userId: data.userId,
-      completed: false
-    }
-
-    createdProject({variables: {...organizedData}});
+    if (createProject.functionality === 'create') createdProject({variables: {...organizedData}});
+    return editProject({variables: {...organizedData}});
   }
 
   const closeModal = () => {
@@ -206,11 +188,9 @@ export default function CreateProject({ modalsEvents }) {
             </div>
             <div className={styles.buttonsContainer}>
               <Button onClick={() => closeModal()} type='button' caption="Cancel" />
-              {
-                createProject.functionality === 'create'
-                ? <Button type='submit' onSubmit={(e) => handleUpdateProject(e)} caption='Create' />
-                : <Button type='submit' onSubmit={(e) => handleUpdateProject(e)} caption='Update' />
-              }
+              <Button onClick={(e) => handleSubmit(e)} type='submit' caption={
+                createProject.functionality === 'create' ? 'Create' : 'Update'
+              } />
             </div>
           </form>
         </span>
