@@ -25,4 +25,10 @@ export default NextAuth({
   pages: {
     error: '/signin',
   },
+  callbacks: {
+    session: async ({ session, user }) => {
+      session.userId = user.id; 
+      return Promise.resolve(session);
+    }
+  },
 });

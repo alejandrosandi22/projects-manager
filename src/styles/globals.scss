@@ -1,17 +1,21 @@
 :root {
   --primary: #E0E0E0;
   --secondary: #2D2C3F;
-  --third: #14151B;
+  --third: #F5F5F5;
+  --fourth: #302f43;
   --color: #151515;
   --darkShadow: #5A5A5A;
   --lightShadow: #fff;
+  --shadow: #73737373;
   .darkMode {
     --primary: #151515;
-    --secondary: #2D2C3F;
-    --third: #14151B;
+    --secondary: #222222;
+    --third: #222222;
+    --fourth: #151515;
     --color: #E0E0E0;
     --darkShadow: #080808;
     --lightShadow: #222222;
+    --shadow: #00000073;
   }
   font-size: 1vw;
   @media (max-width: 1024px) {
@@ -34,9 +38,6 @@
   border-radius: 10px;
   background: var(--third);
 }
-/* ::-webkit-scrollbar-thumb:hover {
-  background: var(--third);
-} */
 
 html,
 body {

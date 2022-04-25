@@ -82,29 +82,26 @@ function Cards(props) {
     return(
       <>
       <div className={styles.card}>
-        <div className={styles['card-wrapper']}>
-          <h1><input ref={checkbox}
-          onChange={handleCompleteProject}
-          type="checkbox"
-          name="completed"
-          id="completed" /> {props.name} <em>Created on: {props.createdAt} <br/>Last update: {props.updatedAt}</em></h1>
-          <h2>{props.description}</h2>
-          {
-            props.customFields.map((field, index) => {
-              if (!field) return;
-              return(
-                <span key={index + 50}>
-                  <h3>{field.name}:</h3>
-                  <h4>{field.content}</h4>
-                </span>
-              );
-            })
-          }
+        <div className={styles.header}>
+          <span>
+            <input ref={checkbox}
+              onChange={handleCompleteProject}
+              type="checkbox"
+              name="completed"
+              id="completed" />
+            <h1>{props.name}</h1>
+          </span>
+          <ul>
+            <li onClick={() => openEditProjectsModal(props)} className={`fas fa-edit ${styles.edit}`}></li>
+            <li onClick={() => openDeleteProjectModal(props.id, props.name)} className={`fas fa-trash ${styles.trash}`}></li>
+          </ul>
         </div>
-        <span>
-          <button onClick={() => openEditProjectsModal(props)} className={`fas fa-edit ${styles.edit}`}></button>
-          <button onClick={() => openDeleteProjectModal(props.id, props.name)} className={`fas fa-trash ${styles.trash}`}></button>
-        </span>
+        <div className={styles.description}>
+          <p>{props.description}</p>
+        </div>
+        <div className={styles.options}>
+          <a href=''>See More</a>
+        </div>
       </div>
     </>
   );

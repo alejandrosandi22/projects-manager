@@ -12,19 +12,18 @@ import Input from 'components/input/input';
 import Spinner from 'components/spinner/spinner';
 import styles from 'styles/projects.module.scss';
 import moment from 'moment';
+import jwt from 'jsonwebtoken';
 
-export default function Projects() {
+export default function Projects({ user }) {
 
   const search = useRef([]);
   const [ foundProjects, setFoundProjects ] = useState(<></>);
-
-  const user = useSelector((state) => state.user);
-  const { filter } = useSelector((state) => state.modals);
   const [ allProjects, setAllProjects ] = useState([]);
+  const { filter } = useSelector((state) => state.modals);
   const { loading, data } = useQuery(ALL_PROJECTS_QUERY, {
     variables: {
       filter: {sort: filter.sort, completed: filter.completed},
-      userId: user ? user._id : ''
+      userId: user ? user.id : ''
     }
   });
 
@@ -36,6 +35,13 @@ export default function Projects() {
       payload: {name, value}
     });
   }
+  
+  useEffect(() => {
+    dispatch({
+      type: '@user/registered',
+      payload: user
+    })
+  }, [user])
 
   useEffect(() => {
     if (data) {
@@ -129,11 +135,13 @@ export default function Projects() {
   );
 }
 
+
 export const getServerSideProps = async (context) => {
 
-  const session = await getSession(context);
-
   const token = context.req.cookies['manager-app-projects-user-token'];
+  const session = await getSession(context);
+  
+  let user = null;
 
   if (!session && !token) return {
     redirect: {
@@ -142,7 +150,17 @@ export const getServerSideProps = async (context) => {
     }
   }
 
+  if (token) {
+    user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  }
+  if (session) {
+    user = {
+      ...session.user,
+      id: session.userId
+    }
+  }
+
   return {
-    props:{}
+    props: {user}
   }
 }

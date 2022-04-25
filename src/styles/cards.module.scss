@@ -1,38 +1,43 @@
 .card {
   width: 90%;
-  min-height: 9rem;
-  max-height: 22rem;
-  background: var(--primary);
-  box-shadow: .25rem .25rem .5rem var(--darkShadow),
-  -.25rem -.25rem .5rem var(--lightShadow);
+  height: 14rem;
   color: var(--color);
   background: var(--secondary);
   color: #E0E0E0;
-  display: flex;
-  padding: 2rem;
+  color: var(--color);
+  background: var(--primary);
+  background: var(--third);
   box-sizing: border-box;
   margin: 2rem 0 2rem 1rem;
   overflow: hidden;
   animation: opacity .5s both;
-  .card-wrapper {
-    width: 90%;
+  box-shadow: 0 10px 17px 0px var(--shadow);
+  .header {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    padding: 0 .5rem 0 0;
-    h1 {
-      margin: 1rem 0;
-      font-size: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+    height: 35%;
+    padding: 0 2rem;
+    border-bottom: 1px solid var(--primary);
+
+    span {
+      display: flex;
+      align-items: center;
+      h1 {
+        font-size: 1.5rem;
+        margin: 0 0 0 1rem;
+      }
       input[type=checkbox] {
         all: unset;
         position: relative;
         display: inline-block;
         width: 1rem;
         height: 1rem;
-        background: var(--primary);
+        background: var(--third);
         border: 1px solid #888;
         &:checked {
-          background: var(--color);
+          background: var(--secondary);
           &::before {
             content: '\f00c';
             font-family: "Font Awesome 5 Pro";
@@ -43,61 +48,61 @@
             justify-content: center;
             align-items: center;
             font-size: .8rem;
-            color: var(--primary);
+            color: #E0E0E0;
           }
         }
       }
-      em {
-        float: right;
-        font-size: 1rem;
-      }
     }
-    h2 {
-      font-size: 1.1rem;
-      min-height: 4rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin: 1rem 0;
-      background: #262536;
-      color: #E0E0E0;
-      border-radius: .5rem;
-      padding: .5rem;
-      overflow-y: scroll;
-    }
-    span {
-      all: unset;
+    ul {
+      list-style: none;
       display: flex;
-      margin: .5rem 0;
-      h3, h4 {
-        font-size: 1.1rem;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 3rem;
+        height: 2rem;
+        font-size: 1rem;
+        border: none;
+        color: #E0E0E0;
+        cursor: pointer;
       }
-      h4 {
-        margin-left: .5rem;
+      .edit {
+        background: #0C71D7;
+      }
+      .trash {
+        background: #FF4861;
       }
     }
   }
-  span {
-    width: 10%;
-    min-height: 9rem;
+  .description {
+    width: 100%;
+    height: 40%;
+    p {
+      padding: .5rem 2rem;
+      width: 100%;
+      height: 100%;
+      font-size: 1.15rem;
+      overflow-y: scroll;
+    }
+  }
+  .options {
+    height: 25%;
+    padding: 0 2rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    button {
-      width: 3rem;
-      height: 2rem;
-      font-size: 1rem;
-      border: none;
+    justify-content: space-between;
+    a {
       color: #E0E0E0;
-      cursor: pointer;
-    }
-    .edit {
-      background: #0C71D7;
-      margin: 0 0 .8rem 0;
-    }
-    .trash {
-      background: #FF4861;
-      margin: .8rem 0 0 0;
+  color: var(--color);
+
+      opacity: .7;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }
