@@ -10,6 +10,10 @@ const initialState = {
     seconds: 5,
   },
   modals: {
+    project: {
+      status: false,
+      data: {},
+    },
     createProject: {
       status: false,
       functionality: 'create',

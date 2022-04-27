@@ -1,4 +1,4 @@
-.button {
+.a {
   border: none;
   border-radius: 50%;
   width: 2.5rem;
@@ -6,6 +6,10 @@
   font-size: 1rem;
   color: #E0E0E0;
   box-shadow: 0 0 .5rem var(--darkShadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   cursor: pointer;
   &:hover {
     filter: brightness(105%);

@@ -16,6 +16,14 @@ export const SIGN_UP_QUERY = gql`
   }
 `;
 
+export const SOCIAL_SIGN_IN = gql`
+  mutation SocialSignIn($name: String!, $email: String!, $image: String!, $provider: String!) {
+    socialSignIn(name: $name, email: $email, image: $image, provider: $provider) {
+      value
+    }
+  }
+`;
+
 export const CURRENT_USER_QUERY = gql`
   query currentUser {
     currentUser {
