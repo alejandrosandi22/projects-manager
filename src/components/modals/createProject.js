@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Button from 'components/button/button';
-import Input from 'components/input/input';
+import Button from 'components/button';
+import Input from 'components/input';
 import styles from 'styles/modals/createProject.module.scss';
 
 import { ALL_PROJECTS_QUERY, CREATE_PROJECT, EDIT_PROJECT } from '../../../graphql/queries/projects';

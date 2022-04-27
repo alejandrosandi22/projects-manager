@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; 
 import Link from 'next/link';
-import Switch from '../switch/switch';
+import Switch from '../switch';
 import styles from 'styles/nav.module.scss';
 import { useApolloClient } from '@apollo/client';
 
