@@ -28,7 +28,7 @@ const userSchema = Schema({
     type: String,
   },
   provider: {
-    type: String
+    type: String,
   },
 }, {
   timestamps: true,

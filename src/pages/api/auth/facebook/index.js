@@ -6,7 +6,7 @@ dbConnect();
 
 export default async function (req, res, next) {
   passport.authenticate('auth-facebook', {
-    scope : ['email'],
-    session: false
+    scope: ['email'],
+    session: false,
   })(req, res, next);
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link'
+import Link from 'next/link';
 import styles from 'styles/signin.module.scss';
 
 import Switch from 'components/switch';
@@ -9,28 +9,29 @@ import Input from 'components/input';
 import SocialSignin from 'components/socialSignIn';
 
 import { useMutation } from '@apollo/client';
-import { SIGN_IN_QUERY } from '../../graphql/queries/user';
 
 import { setCookies } from 'cookies-next';
 import { useDispatch } from 'react-redux';
+import { SIGN_IN_QUERY } from '../../graphql/queries/user';
 
 export default function SignIn() {
-
-  const [ credentials, setCredentials ] = useState();
-  const [ loading, setLoading ] = useState(false);
+  const [credentials, setCredentials] = useState();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { error } = router.query;
 
-  const [ signIn, signInResult ] = useMutation(SIGN_IN_QUERY, {
+  const [signIn, signInResult] = useMutation(SIGN_IN_QUERY, {
     onError: (error) => {
       dispatch({
         type: '@alert/show',
-        payload: {status: true, type: 'error', message: `${error.message}`, seconds: 5},
+        payload: {
+          status: true, type: 'error', message: `${error.message}`, seconds: 5,
+        },
       });
       setLoading(false);
-    }
+    },
   });
 
   useEffect(() => {
@@ -40,47 +41,49 @@ export default function SignIn() {
 
       dispatch({
         type: '@alert/show',
-        payload: {status: true, type: 'success', message: 'Welcome!', seconds: 5},
+        payload: {
+          status: true, type: 'success', message: 'Welcome!', seconds: 5,
+        },
       });
 
       setLoading(false);
 
       router.push('/dashboard');
     }
-  }, [signInResult.data, error])
+  }, [signInResult.data, error]);
 
   const handleSetCredentials = (e) => {
     setCredentials({
       ...credentials,
-      [e.target.id]: e.target.value
-    })
-  }
+      [e.target.id]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch({
       type: '@alert/show',
-      payload: {status: false},
+      payload: { status: false },
     });
     setLoading(true);
 
-    signIn({ variables: {email: credentials.email, password: credentials.password} });
-  }
+    signIn({ variables: { email: credentials.email, password: credentials.password } });
+  };
 
-  return(
+  return (
     <>
-    <div className={styles.switchWrapper}>
-      <Switch />
-    </div>
+      <div className={styles.switchWrapper}>
+        <Switch />
+      </div>
       <section className={styles.section}>
         <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
-          <Input required={true} onChange={handleSetCredentials} type="email" label="Email" id="email"/>
-          <Input required={true} onChange={handleSetCredentials} type="password" label="Password" id="password"/>
+          <Input required onChange={handleSetCredentials} type="email" label="Email" id="email" />
+          <Input required onChange={handleSetCredentials} type="password" label="Password" id="password" />
           <button onSubmit={handleSubmit}>{ !loading ? 'Sign In' : <Spinner /> }</button>
         </form>
         <span>
-{/*           <Link href="/recovery">
+          {/*           <Link href="/recovery">
             <a>Forget your password?</a>
           </Link> */}
           <Link href="/signup">
@@ -97,17 +100,18 @@ export default function SignIn() {
 }
 
 export const getServerSideProps = async (context) => {
-
   const token = context.req.cookies['manager-app-projects-user-token'];
 
-  if (token) return {
-    redirect: {
-      destination: '/dashboard',
-      permanent: false
-    }
+  if (token) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
   }
 
   return {
-    props:{}
-  }
-}
+    props: {},
+  };
+};

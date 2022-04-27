@@ -26,5 +26,9 @@ module.exports = {
     'consistent-return': 'off',
     'no-param-reassign': 'off',
     'default-param-last': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'func-names': 'off',
+    'import/no-unresolved': 'off',
+    'react/jsx-filename-extension': 'off',
   },
 };
