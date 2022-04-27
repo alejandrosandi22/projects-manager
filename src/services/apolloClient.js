@@ -12,7 +12,7 @@ const client = new ApolloClient({
     headers: {
       authorization: getAuth(),
     },
-    uri: 'http://localhost:3000/api/graphql',
+    uri: process.env.CLIENT_URI,
   }),
 });
 

@@ -5,10 +5,10 @@ import 'styles/globals.scss';
 import { verify } from 'jsonwebtoken';
 
 export default function MyApp({
-  session, Component, pageProps, user,
+  Component, pageProps, user,
 }) {
   return (
-    <Providers session={session}>
+    <Providers>
       <Layout user={user}>
         <Component {...pageProps} />
       </Layout>
@@ -16,7 +16,7 @@ export default function MyApp({
   );
 }
 
-MyApp.getInitialProps = ({ ctx }) => {
+MyApp.get = ({ ctx }) => {
   let user = null;
   try {
     const { req, res } = ctx;
