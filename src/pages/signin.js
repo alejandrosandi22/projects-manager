@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import Link from 'next/link'
 import styles from 'styles/signin.module.scss';
 
-import Switch from 'components/switch/switch';
-import Spinner from 'components/spinner/spinner';
-import Input from 'components/input/input';
+import Switch from 'components/switch';
+import Spinner from 'components/spinner';
+import Input from 'components/input';
 import SocialSignin from 'components/socialSignIn';
 
 import { useMutation } from '@apollo/client';

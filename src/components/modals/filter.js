@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from 'styles/modals/filter.module.scss';
-import Button from 'components/button/button';
+import Button from 'components/button';
 import { useSelector } from 'react-redux';
 
 export default function Filter({ modalsEvents }) {

@@ -1,4 +1,4 @@
-import Input from 'components/input/input';
+import Input from 'components/input';
 import styles from 'styles/modals/deleteUser.module.scss';
 
 export default function DeleteUser({ handleDeleteUser, email, setShowModal }) {

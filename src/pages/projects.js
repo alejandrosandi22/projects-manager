@@ -5,10 +5,10 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import Cards from 'components/cards/cards';
-import Button from 'components/button/button';
-import Input from 'components/input/input';
-import Spinner from 'components/spinner/spinner';
+import Cards from 'components/cards';
+import Button from 'components/button';
+import Input from 'components/input';
+import Spinner from 'components/spinner';
 import styles from 'styles/projects.module.scss';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';

@@ -5,8 +5,8 @@ import Alerts from 'components/alerts';
 import Modals from 'components/modals';
 import { CURRENT_USER_QUERY } from '../../../graphql/queries/user';
 import { useQuery } from '@apollo/client';
-import Spinner from 'components/spinner/spinner';
-import Nav from 'components/nav/nav';
+import Spinner from 'components/spinner';
+import Nav from 'components/nav';
 import { useRouter } from 'next/router';
 
 export default function Layout({ children }) {

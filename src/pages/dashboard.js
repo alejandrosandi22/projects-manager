@@ -1,6 +1,6 @@
-import Spinner from 'components/spinner/spinner';
+import Spinner from 'components/spinner';
 import { useEffect, useState } from 'react';
-import Cards from 'components/cards/cards';
+import Cards from 'components/cards';
 import { ALL_PROJECTS_QUERY } from '../../graphql/queries/projects';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';

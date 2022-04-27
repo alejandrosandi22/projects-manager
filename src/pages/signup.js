@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import Link from 'next/link'
 import styles from 'styles/signup.module.scss';
 
-import Input from 'components/input/input';
-import Switch from 'components/switch/switch';
+import Input from 'components/input';
+import Switch from 'components/switch';
 import SocialSignin from 'components/socialSignIn';
-import Spinner from 'components/spinner/spinner';
+import Spinner from 'components/spinner';
 
 import { setCookies } from 'cookies-next';
 
