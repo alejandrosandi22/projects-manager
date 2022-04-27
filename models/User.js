@@ -19,13 +19,16 @@ const userSchema = Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
     maxLenght: 255,
     minLenght: 5,
   },
   image: {
     type: String,
+  },
+  provider: {
+    type: String
   },
 }, {
   timestamps: true,

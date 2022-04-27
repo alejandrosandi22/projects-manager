@@ -1,14 +1,16 @@
 import { removeCookies } from 'cookies-next';
-import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; 
 import Link from 'next/link';
 import Switch from '../switch/switch';
 import styles from 'styles/nav.module.scss';
+import { useApolloClient } from '@apollo/client';
 
-export default function Nav(props) {
 
+export default function Nav() {
+  
+  const client = useApolloClient();
   const user = useSelector((state) => state.user);
   const state  = useSelector((state) => state)
   const [ selected, setSelected ] = useState('0');
@@ -23,11 +25,9 @@ export default function Nav(props) {
 
   const handleSignOut = () => {
     removeCookies('manager-app-projects-user-token');
-    signOut();
+    client.clearStore();
     router.push('/signin');
   }
-
-
 
   useEffect(() => {
     const { pathname } = router;
@@ -42,7 +42,7 @@ export default function Nav(props) {
     </div>
       <nav className={styles.nav}>
         <ul>
-          <li>{ user && user.name }<i className='fal fa-angle-down'></i></li>
+          <li>{ user && user.name }</li>
           <li><img onError={({currentTarget}) => currentTarget.src = '/default-user.png'} src={user ? user.image : '/default-user.png'} alt='user' /></li>
         </ul>
       </nav>
@@ -65,14 +65,10 @@ export default function Nav(props) {
               </li>
             </a>
           </Link>
-          <Link href='https://manager-app.ml'>
-            <a target='_blank'>
-            <li className={styles.li}>
-              <i className='fal fa-plus-circle'></i>
-              <span>More</span>  
+          <li onClick={() => handleSignOut()} className={styles.li}>
+              <i className='fal fa-sign-out'></i>
+              <span>Sign Out</span>  
             </li>
-            </a>
-          </Link>
         </ul>
       </nav>
       <div className={styles.switchWrapper}>

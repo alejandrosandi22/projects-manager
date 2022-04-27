@@ -17,6 +17,7 @@
     margin: 0 0 0 2rem;
   }
   ul {
+    position: absolute;
     list-style: none;
     display: flex;
     align-items: center;
@@ -27,10 +28,9 @@
       font-size: 1.15rem;
       margin: 0 1rem;
       color: var(--color);
-      cursor: pointer;
+      cursor: default;
       i {
         font-size: 1.25rem;
-        margin: 0 0 0 1rem;
       }
       img {
         width: 3rem;

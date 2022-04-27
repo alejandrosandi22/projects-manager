@@ -34,7 +34,7 @@ export const userResolvers = {
           name: args.name,
           image: args.image ? args.image : '',
           email: args.email,
-          id: user._id,
+          id: newUser._id,
         };
 
         const token = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
@@ -48,6 +48,55 @@ export const userResolvers = {
         };
       } catch (error) {
         throw new UserInputError(error);
+      }
+    },
+    socialSignIn: async (_root, args) => {
+      try {
+        const user = await User.findOne({email: args.email});
+        if (!user) {
+          const newUser = await new User({
+            name: args.name,
+            email: args.email,
+            image: args.image ? args.image : "",
+            provider: args.provider
+          });
+
+          const userForToken = {
+            name: args.name,
+            image: args.image ? args.image : '',
+            email: args.email,
+            _id: newUser._id
+          };
+  
+          const token = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: '8d',
+          });
+
+          await newUser.save();
+
+          return {
+            value: token,
+          };
+        }
+        if (user.provider) {
+          const userForToken = {
+            name: args.name,
+            image: args.image ? args.image : '',
+            email: args.email,
+            id: user._id,
+          };
+          const token = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: '8d',
+          });
+  
+          return {
+            value: token,
+          };
+        }
+        throw new UserInputError('User logged with email and password');
+      }
+      catch (error) {
+        throw new UserInputError(error.message);
       }
     },
     signIn: async (_root, args) => {

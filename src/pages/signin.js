@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getSession } from 'next-auth/react';
 import Link from 'next/link'
 import styles from 'styles/signin.module.scss';
 
 import Switch from 'components/switch/switch';
 import Spinner from 'components/spinner/spinner';
 import Input from 'components/input/input';
-import SocialSignin from 'components/socialSignIn/socialSignIn';
+import SocialSignin from 'components/socialSignIn';
 
 import { useMutation } from '@apollo/client';
 import { SIGN_IN_QUERY } from '../../graphql/queries/user';
@@ -36,7 +35,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (signInResult.data) {
-      const { value, id } = signInResult.data.signIn;
+      const { value } = signInResult.data.signIn;
       setCookies('manager-app-projects-user-token', value);
 
       dispatch({
@@ -99,11 +98,9 @@ export default function SignIn() {
 
 export const getServerSideProps = async (context) => {
 
-  const session = await getSession(context);
-
   const token = context.req.cookies['manager-app-projects-user-token'];
 
-  if (session || token) return {
+  if (token) return {
     redirect: {
       destination: '/dashboard',
       permanent: false

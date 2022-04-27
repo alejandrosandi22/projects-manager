@@ -5,7 +5,7 @@ import styles from 'styles/signup.module.scss';
 
 import Input from 'components/input/input';
 import Switch from 'components/switch/switch';
-import SocialSignin from 'components/socialSignIn/socialSignIn';
+import SocialSignin from 'components/socialSignIn';
 import Spinner from 'components/spinner/spinner';
 
 import { setCookies } from 'cookies-next';

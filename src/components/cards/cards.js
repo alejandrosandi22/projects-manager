@@ -100,7 +100,12 @@ function Cards(props) {
           <p>{props.description}</p>
         </div>
         <div className={styles.options}>
-          <a href=''>See More</a>
+          <a onClick={() => {
+            props.modalsEvents('project', {
+              status: true,
+              data: props,
+            })
+          }}>See More</a>
         </div>
       </div>
     </>

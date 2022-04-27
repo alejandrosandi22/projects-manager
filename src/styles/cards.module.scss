@@ -71,10 +71,10 @@
         cursor: pointer;
       }
       .edit {
-        background: #0C71D7;
+        background: #008BAA;
       }
       .trash {
-        background: #FF4861;
+        background: #B3312A;
       }
     }
   }
@@ -96,10 +96,9 @@
     align-items: center;
     justify-content: space-between;
     a {
-      color: #E0E0E0;
-  color: var(--color);
-
+      color: var(--color);
       opacity: .7;
+      cursor: pointer;
       &:hover {
         opacity: 1;
       }

@@ -2,11 +2,12 @@ import { gql } from 'apollo-server-micro';
 
 export const typeDefs = gql`
   type User {
+    _id: ID!
     name: String!
     email: String!
-    password: String!
+    password: String
     image: String
-    _id: ID!
+    provider: String
   }
   type Token {
     value: String!
@@ -23,6 +24,12 @@ export const typeDefs = gql`
       email: String!
       password: String!
       image: String
+    ): Token
+    socialSignIn(
+      name: String!
+      email: String!
+      image: String
+      provider: String
     ): Token
     signIn(
       email: String!

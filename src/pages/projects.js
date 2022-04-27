@@ -1,4 +1,3 @@
-import { getSession } from 'next-auth/react';
 import { ALL_PROJECTS_QUERY } from '../../graphql/queries/projects';
 
 import { useQuery } from '@apollo/client';
@@ -139,26 +138,15 @@ export default function Projects({ user }) {
 export const getServerSideProps = async (context) => {
 
   const token = context.req.cookies['manager-app-projects-user-token'];
-  const session = await getSession(context);
   
-  let user = null;
-
-  if (!session && !token) return {
+  if (!token) return {
     redirect: {
       destination: '/signin',
       permanent: false
     }
   }
 
-  if (token) {
-    user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-  }
-  if (session) {
-    user = {
-      ...session.user,
-      id: session.userId
-    }
-  }
+  const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
   return {
     props: {user}
