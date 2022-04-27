@@ -1,7 +1,7 @@
-import CreateProject from './createProject';
-import DeleteProject from "./deleteProject";
-import Filter from './filter';
 import { useDispatch, useSelector } from 'react-redux';
+import CreateProject from './createProject';
+import DeleteProject from './deleteProject';
+import Filter from './filter';
 import Project from './project';
 
 export default function Modals() {
@@ -11,16 +11,16 @@ export default function Modals() {
   const modalsEvents = (name, value) => {
     dispatch({
       type: '@modal/open',
-      payload: {name, value}
+      payload: { name, value },
     });
-  }
+  };
 
-  return(
+  return (
     <>
-    { modals.project.status && <Project modalsEvents={modalsEvents} /> }
-    { modals.deleteProject.status && <DeleteProject modalsEvents={modalsEvents} /> }
-    { modals.createProject.status && <CreateProject modalsEvents={modalsEvents} /> }
-    { modals.filter.status && <Filter modalsEvents={modalsEvents} /> }
+      { modals.project.status && <Project modalsEvents={modalsEvents} /> }
+      { modals.deleteProject.status && <DeleteProject modalsEvents={modalsEvents} /> }
+      { modals.createProject.status && <CreateProject modalsEvents={modalsEvents} /> }
+      { modals.filter.status && <Filter modalsEvents={modalsEvents} /> }
     </>
   );
 }

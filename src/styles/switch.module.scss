@@ -46,3 +46,10 @@
     transition: .5s;
   }
 }
+
+.preload {
+  transition: 0s;
+  &::before {
+    transition: 0s;
+  }
+}

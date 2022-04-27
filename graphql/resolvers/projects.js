@@ -44,13 +44,13 @@ export const projectResolvers = {
     editProject: async (_root, args) => {
       const { _id } = args;
       delete args._id;
-      const updatedProject = await Projects.findByIdAndUpdate(_id, {...args});
+      const updatedProject = await Projects.findByIdAndUpdate(_id, { ...args });
 
       return updatedProject;
     },
     completeProject: async (_root, args) => {
       const { _id } = args;
-      const updatedProject = await Projects.findByIdAndUpdate(_id, {completed: args.completed});
+      const updatedProject = await Projects.findByIdAndUpdate(_id, { completed: args.completed });
       return updatedProject;
     },
     deleteProject: async (_root, args) => {

@@ -52,22 +52,22 @@ export const userResolvers = {
     },
     socialSignIn: async (_root, args) => {
       try {
-        const user = await User.findOne({email: args.email});
+        const user = await User.findOne({ email: args.email });
         if (!user) {
           const newUser = await new User({
             name: args.name,
             email: args.email,
-            image: args.image ? args.image : "",
-            provider: args.provider
+            image: args.image ? args.image : '',
+            provider: args.provider,
           });
 
           const userForToken = {
             name: args.name,
             image: args.image ? args.image : '',
             email: args.email,
-            _id: newUser._id
+            _id: newUser._id,
           };
-  
+
           const token = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: '8d',
           });
@@ -88,14 +88,13 @@ export const userResolvers = {
           const token = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: '8d',
           });
-  
+
           return {
             value: token,
           };
         }
         throw new UserInputError('User logged with email and password');
-      }
-      catch (error) {
+      } catch (error) {
         throw new UserInputError(error.message);
       }
     },

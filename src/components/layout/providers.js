@@ -7,13 +7,11 @@ import { reducer } from '../../../store/reducer';
 const store = createStore(reducer);
 
 export default function Providers({ children }) {
-  return(
-    <>
+  return (
     <ApolloProvider client={apolloClient}>
-    <Provider store={store}>
-      { children }
-    </Provider>
+      <Provider store={store}>
+        { children }
+      </Provider>
     </ApolloProvider>
-    </>
   );
 }

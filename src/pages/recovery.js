@@ -1,7 +1,7 @@
 export default function Recovery() {
   return (
     <>
-      recovery works!      
+      recovery works!
     </>
   );
 }
