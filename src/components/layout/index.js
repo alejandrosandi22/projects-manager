@@ -19,10 +19,10 @@ export default function Layout({ children }) {
   const { loading, data: user } = useQuery(CURRENT_USER_QUERY);
 
   useEffect(() => {
-    if (loading) return;
+    if (!user) return;
     dispatch({
       type: '@user/registered',
-      payload: user.currentUser,
+      payload: {...user.currentUser, id: user.currentUser._id},
     });
   }, [user]);
 
@@ -42,14 +42,13 @@ export default function Layout({ children }) {
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossOrigin="anonymous" />
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
-        <script src="https://apis.google.com/js/platform.js" async defer />
-        <meta name="google-signin-client_id" content="144603059402-7g949992apamrckos0d5njn3jp2a8vru.apps.googleusercontent.com" />
       </Head>
       <div data="data" className={`App ${themeMode}`}>
+        { console.log(user.currentUser) }
         { 
           user &&
-          pathname === '/dashboard' &&
-          pathname === '/projects'  && <Nav />
+          pathname === '/dashboard' ||
+          pathname === '/projects' ? <Nav /> : <></>
         }
         { children }
         <Alerts />
