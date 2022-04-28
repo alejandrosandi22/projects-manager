@@ -96,6 +96,13 @@ export default function Projects({ user }) {
     }));
   };
 
+  if (user && !state.user) {
+    dispatch({
+      type: '@user/registered',
+      payload: user
+    })
+  }
+
   if (loading) return <Spinner />;
 
   return (
