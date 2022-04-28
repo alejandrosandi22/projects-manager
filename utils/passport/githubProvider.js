@@ -7,7 +7,7 @@ passport.use('auth-github', new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   passReqToCallback: true,
-  callbackURL: 'http://localhost:3000/api/auth/github/callback',
+  callbackURL: 'https://projects-manager.alejandrosandi.com/api/auth/github/callback',
   scope: 'user:email',
 }, async (accessToken, refreshToken, profile, done) => {
   try {

@@ -6,7 +6,7 @@ import User from '../../models/User';
 passport.use('auth-facebook', new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENT_ID,
   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3000/api/auth/facebook/callback',
+  callbackURL: 'https://projects-manager.alejandrosandi.com/api/auth/facebook/callback',
   profileFields: ['id', 'displayName', 'photos', 'email'],
 }, async (_accessToken, _refreshToken, profile, done) => {
   try {

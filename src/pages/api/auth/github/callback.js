@@ -5,9 +5,9 @@ import '../../../../../utils/passport';
 
 export default async function (req, res, next) {
   passport.authenticate('auth-github', (error, user, info) => {
-    if (error || !user) res.redirect('http://localhost:3000/?a=auth_fail');
+    if (error || !user) res.redirect('https://projects-manager.alejandrosandi.com/?a=auth_fail');
 
     setCookies('manager-app-projects-user-token', info.token, { req, res });
-    res.redirect('http://localhost:3000/dashboard');
+    res.redirect('https://projects-manager.alejandrosandi.com/dashboard');
   })(req, res, next);
 }
