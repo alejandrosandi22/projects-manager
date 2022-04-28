@@ -32,3 +32,4 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+_next

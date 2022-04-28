@@ -1,17 +1,17 @@
 import { ApolloServer } from 'apollo-server-micro';
 import Cors from 'micro-cors';
 import jwt from 'jsonwebtoken';
-import User from '../../../models/User';
+import User from '../../models/User';
 
-import { getResolvers } from '../../../graphql/resolvers/merge';
+import { getResolvers } from '../../graphql/resolvers/merge';
 
 // resolvers
-import { projectResolvers } from '../../../graphql/resolvers/projects';
-import { userResolvers } from '../../../graphql/resolvers/user';
+import { projectResolvers } from '../../graphql/resolvers/projects';
+import { userResolvers } from '../../graphql/resolvers/user';
 
 // type definitions
-import { typeDefs as projects } from '../../../graphql/schemas/projects';
-import { typeDefs as users } from '../../../graphql/schemas/user';
+import { typeDefs as projects } from '../../graphql/schemas/projects';
+import { typeDefs as users } from '../../graphql/schemas/user';
 
 const cors = Cors();
 
