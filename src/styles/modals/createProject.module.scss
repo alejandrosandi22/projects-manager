@@ -24,6 +24,7 @@
     border-radius: 1rem;
     box-shadow: .25rem .25rem .5rem var(--darkShadow);
     animation: show-modal .3s both;
+    overflow: hidden;
     main {
       padding: .5rem 0 3rem 3rem;
       position: absolute;
@@ -59,7 +60,8 @@
         flex-direction: column;
         justify-content: space-around;
       }
-      p {
+      .buttonWrapper {
+        all: unset;
         width: 100%;
         height: 5rem;
         display: flex;
@@ -69,7 +71,7 @@
       }
       .customFilesContainer {
         width: 35rem;
-        height: 12rem;
+        height: 20rem;
         margin: 1rem 0;
         overflow-y: scroll;
         .customFileWrapper {
@@ -146,5 +148,34 @@
   100% {
     opacity: 0;
     transform: translateY(-5rem);
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    span {
+      width: 100vw;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: unset;
+      min-height: unset;
+      max-height: unset;
+      border-radius: unset;
+      main {
+        h3 {
+          font-size: 1.2rem;
+        }
+      }
+      form {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .customFilesContainer {
+          width: 100vw;
+        }
+      }
+    }
   }
 }

@@ -102,16 +102,18 @@ export default function Projects({ user }) {
     <section className={styles.section}>
       <main className={styles.panel}>
         <Input onChange={handleSearch} type="text" label="Search:" placeholder="Project..." />
-        <Button onClick={() => modalsEvents('createProject', { status: true, functionality: 'create' })} caption="Create Project" />
-        <Button
-          onClick={() => {
-            modalsEvents(
-              'filter',
-              { status: true, sort: filter.sort, completed: filter.completed },
-            );
-          }}
-          className="fal fa-sliders-h"
-        />
+        <span>
+          <Button onClick={() => modalsEvents('createProject', { status: true, functionality: 'create' })} caption="Create Project" />
+          <Button
+            onClick={() => {
+              modalsEvents(
+                'filter',
+                { status: true, sort: filter.sort, completed: filter.completed },
+              );
+            }}
+            className="fal fa-sliders-h"
+          />
+        </span>
       </main>
       <div className={styles.cardContainer}>
         {

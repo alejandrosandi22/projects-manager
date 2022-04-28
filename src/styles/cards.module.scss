@@ -20,13 +20,13 @@
     height: 35%;
     padding: 0 2rem;
     border-bottom: 1px solid var(--primary);
-
     span {
       display: flex;
       align-items: center;
       h1 {
         font-size: 1.5rem;
         margin: 0 0 0 1rem;
+        text-overflow: ellipsis;
       }
       input[type=checkbox] {
         all: unset;
@@ -112,5 +112,27 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .card {
+    .header {
+      span {
+        h1 {
+          min-width: 200px;
+        }
+      }
+      ul {
+        flex-direction: column;
+        li {
+          width: .8rem;
+          height: .8rem;
+        }
+        .edit, .trash {
+          background: transparent;
+        }
+      }
+    }
   }
 }

@@ -172,11 +172,11 @@ export default function CreateProject({ modalsEvents }) {
         <main>
           <h3>
             {
-                createProject
-                && createProject.functionality === 'create'
-                  ? 'Create New Project'
-                  : 'Update Project'
-              }
+              createProject
+              && createProject.functionality === 'create'
+                ? 'Create New Project'
+                : 'Update Project'
+            }
           </h3>
           <i onClick={() => closeModal()} className="fal fa-times" />
         </main>
@@ -185,9 +185,9 @@ export default function CreateProject({ modalsEvents }) {
             <Input reference={inputName} required onChange={getCredentials} type="text" name="name" id="name" label="Project Name: " />
             <Input required onChange={getCredentials} type="text" name="description" id="description" label="Description: " />
           </div>
-          <p>
+          <div className={styles.buttonWrapper}>
             <Button onClick={() => addField()} type="button" className="fal fa-plus" />
-          </p>
+          </div>
           <div className={styles.customFilesContainer}>
             { customFields }
           </div>

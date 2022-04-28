@@ -136,3 +136,30 @@
     transform: translateY(-5rem);
   }
 }
+
+@media (max-width: 1024px) {
+  .section {
+    .card {
+      top: 0;
+      left: 0;
+      right: unset;
+      width: 100%;
+      height: 100vh;
+      min-height: unset;
+      max-height: unset;
+      overflow: hidden;
+      .options {
+        height: calc(100% - 12rem);
+        justify-content: space-between;
+        flex-direction: column;
+        .customFields {
+          width: 100%;
+        }
+        .span {
+          width: 100%;
+          display: flex;
+        }
+      }
+    }
+  }
+}
