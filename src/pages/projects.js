@@ -16,6 +16,7 @@ export default function Projects({ user }) {
   const [foundProjects, setFoundProjects] = useState(<></>);
   const [allProjects, setAllProjects] = useState([]);
   const { filter } = useSelector((state) => state.modals);
+  const state = useSelector((state) => state);
   const { loading, data } = useQuery(ALL_PROJECTS_QUERY, {
     variables: {
       filter: { sort: filter.sort, completed: filter.completed },
