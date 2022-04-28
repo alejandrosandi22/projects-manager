@@ -6,10 +6,9 @@ import User from '../../models/User';
 passport.use('auth-github', new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  passReqToCallback: true,
   callbackURL: 'https://projects-manager.alejandrosandi.com/api/auth/github/callback',
   scope: 'user:email',
-}, async (accessToken, refreshToken, profile, done) => {
+}, async (_req, _accessToken, _refreshToken, profile, done) => {
   try {
     const user = await User.findOne({ email: profile.emails[0].value });
     if (!user) {

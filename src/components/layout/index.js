@@ -20,6 +20,7 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     if (!user) return;
+    if (!user.currentUser) return;
     dispatch({
       type: '@user/registered',
       payload: {...user.currentUser, id: user.currentUser._id},
@@ -44,7 +45,6 @@ export default function Layout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
       </Head>
       <div data="data" className={`App ${themeMode}`}>
-        { console.log(user.currentUser) }
         { 
           user &&
           pathname === '/dashboard' ||
