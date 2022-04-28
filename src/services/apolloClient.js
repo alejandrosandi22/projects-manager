@@ -12,7 +12,7 @@ const client = new ApolloClient({
     headers: {
       authorization: getAuth(),
     },
-    uri: process.env.CLIENT_URI,
+    uri: 'https://projects-manager.alejandrosandi.com/api/graphql',
   }),
 });
 

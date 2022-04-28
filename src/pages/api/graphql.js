@@ -1,17 +1,17 @@
 import { ApolloServer } from 'apollo-server-micro';
 import Cors from 'micro-cors';
 import jwt from 'jsonwebtoken';
-import User from '../../models/User';
+import User from '../../../models/User';
 
-import { getResolvers } from '../../graphql/resolvers/merge';
+import { getResolvers } from '../../../graphql/resolvers/merge';
 
 // resolvers
-import { projectResolvers } from '../../graphql/resolvers/projects';
-import { userResolvers } from '../../graphql/resolvers/user';
+import { projectResolvers } from '../../../graphql/resolvers/projects';
+import { userResolvers } from '../../../graphql/resolvers/user';
 
 // type definitions
-import { typeDefs as projects } from '../../graphql/schemas/projects';
-import { typeDefs as users } from '../../graphql/schemas/user';
+import { typeDefs as projects } from '../../../graphql/schemas/projects';
+import { typeDefs as users } from '../../../graphql/schemas/user';
 
 const cors = Cors();
 
@@ -42,7 +42,7 @@ export default cors(async (req, res) => {
   }
 
   await startServer;
-  await apolloServer.createHandler({ path: '/graphql' })(req, res);
+  await apolloServer.createHandler({ path: 'https://projects-manager.alejandrosandi.com/api/graphql', })(req, res);
 });
 
 export const config = { api: { bodyParser: false } };
