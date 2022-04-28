@@ -15,8 +15,6 @@ export default function Nav() {
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
 
-  console.log(user)
-
   const hanldeToggle = () => {
     setToggle(!toggle);
   }
