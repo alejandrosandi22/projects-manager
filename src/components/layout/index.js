@@ -4,22 +4,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import Alerts from 'components/alerts';
 import Modals from 'components/modals';
 import Nav from 'components/nav';
+import { CURRENT_USER_QUERY } from '../../../graphql/queries/user';
+import { useQuery } from '@apollo/client';
+import Spinner from 'components/spinner';
+import { useRouter } from 'next/router';
 
-export default function Layout({ children, user }) {
+export default function Layout({ children }) {
   const theme = useSelector((state) => state.theme);
   const [themeMode, setThemeMode] = useState('lightMode');
   const dispatch = useDispatch();
 
+  const { pathname } = useRouter();
+
+  const { loading, data: user } = useQuery(CURRENT_USER_QUERY);
+
   useEffect(() => {
+    if (loading) return;
     dispatch({
       type: '@user/registered',
-      payload: user,
+      payload: user.currentUser,
     });
   }, [user]);
 
   useEffect(() => {
     setThemeMode(`${theme ? 'darkMode' : 'lightMode'}`);
   }, [theme]);
+
+  if (loading) return <Spinner />
 
   return (
     <>
@@ -35,9 +46,11 @@ export default function Layout({ children, user }) {
         <meta name="google-signin-client_id" content="144603059402-7g949992apamrckos0d5njn3jp2a8vru.apps.googleusercontent.com" />
       </Head>
       <div data="data" className={`App ${themeMode}`}>
-        {
-            user && <Nav />
-          }
+        { 
+          user &&
+          pathname === '/dashboard' &&
+          pathname === '/projects'  && <Nav />
+        }
         { children }
         <Alerts />
         <Modals />
