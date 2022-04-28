@@ -11,6 +11,7 @@
   "tag tag"
   "latest completed"
   "latest completed";
+  background: var(--primary);
   animation: opacity .5s both;
   .tag {
     position: relative;
@@ -142,37 +143,6 @@
       text-align: start;
       width: 80%;
     }
-    .latestCard {
-      width: 80%;
-      height: 70%;
-      background: var(--fourth);
-      padding: .5rem 1.5rem;
-      box-sizing: border-box;
-      box-shadow: .25rem .25rem .5rem var(--darkShadow),
-      -.25rem -.25rem .5rem var(--lightShadow);
-      h3 {
-        margin: 1rem 0;
-        font-size: 1.5rem;
-        color: #E0E0E0;
-      }
-      h5 {
-        margin: 1rem 0;
-        font-size: 1.1rem;
-        color: #E0E0E0;
-      }
-      h4 {
-        font-size: 1.1rem;
-        height: 60%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin: 1rem 0;
-        background: var(--secondary);
-        color: #E0E0E0;
-        border-radius: .5rem;
-        padding: .5rem;
-        overflow-y: scroll;
-      }
-    }
     .noProjects {
       width: 90%;
       height: 14rem;
@@ -213,5 +183,31 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    top: 5rem;
+    width: 100%;
+    height: 120%;
+    grid-template-columns: 100%;
+    grid-template-rows: 15% 42% 43%;
+    grid-template-areas:
+    "tag"
+    "latest"
+    "completed";
+    .tag {
+      div {
+        span {
+          h4 {
+            align-self: center;
+          }
+        }
+        i {
+          display: none;
+        }
+      }
+    }
   }
 }

@@ -1,11 +1,11 @@
+import { useEffect, useState } from 'react';
+import { useApolloClient } from '@apollo/client';
+import { useSelector } from 'react-redux';
 import { removeCookies } from 'cookies-next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import Link from 'next/link';
 import styles from 'styles/nav.module.scss';
-import { useApolloClient } from '@apollo/client';
 import Switch from '../switch';
+import Link from 'next/link';
 
 export default function Nav() {
   const client = useApolloClient();
@@ -15,9 +15,13 @@ export default function Nav() {
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
 
+  const hanldeToggle = () => {
+    setToggle(!toggle);
+  }
+
   const handleClick = (e) => {
     const { id } = e.target;
-    if (window.innerWidth <= 1024) setToggle(!toggle);
+    hanldeToggle();
     setSelected(id);
   };
 
@@ -35,32 +39,38 @@ export default function Nav() {
 
   return (
     <>
-      <div className={styles.div}>
-        <div className={`${styles.toggle} ${toggle && styles.active}`} onClick={() => setToggle(!toggle)} />
-      </div>
       <nav className={styles.nav}>
-        <ul>
-          <li>{ user && user.name }</li>
-          <li><img onError={({ currentTarget }) => currentTarget.src = '/default-user.png'} src={user ? user.image : '/default-user.png'} alt="user" /></li>
-        </ul>
-      </nav>
-      <nav className={styles.sidebar}>
-        <ul>
-          <li className={styles.logo}>
+        <ul className={styles.logo}>
+          <li>
             <i className="fas fa-clipboard-list" />
             <h1>Manager</h1>
           </li>
+        </ul>
+      {
+        window.innerWidth > 1024 && <ul className={styles.ul}>
+          <li>{ user && user.name }</li>
+          <li><img onError={({ currentTarget }) => currentTarget.src = '/default-user.png'} src={user ? user.image : '/default-user.png'} alt="user" /></li>
+        </ul>
+      }
+      {
+        window.innerWidth <= 1024 && <div onClick={() => hanldeToggle()} className={styles.toggleWrapper}>
+          <div className={`${styles.toggle} ${toggle && styles.active}`} onClick={() => setToggle(!toggle)} />
+        </div>
+      }
+      </nav>
+      <nav className={`${styles.sidebar} ${!toggle ? styles.hidde : ''}`}>
+        <ul>
           <Link href="/dashboard">
-            <a>
-              <li id="0" onClick={handleClick} className={`${styles.li} ${selected === '0' && styles.active}`}>
+            <a id="0" onClick={handleClick}>
+              <li id="0" onClick={handleClick} className={`${styles.li} ${selected === '0' ? styles.active : ''}`}>
                 <i className="fal fa-tachometer" />
                 <span>Dashboard</span>
               </li>
             </a>
           </Link>
           <Link href="/projects">
-            <a>
-              <li id="1" onClick={handleClick} className={`${styles.li} ${selected === '1' && styles.active}`}>
+            <a id="1" onClick={handleClick}>
+              <li id="1" onClick={handleClick} className={`${styles.li} ${selected === '1' ? styles.active : ''}`}>
                 <i className="fal fa-clipboard-list" />
                 <span>Projects</span>
               </li>
@@ -70,11 +80,17 @@ export default function Nav() {
             <i className="fal fa-sign-out" />
             <span>Sign Out</span>
           </li>
+          { 
+            window.innerWidth <= 1024 && <li className={styles.li}>
+              <img onError={({ currentTarget }) => currentTarget.src = '/default-user.png'} src={user ? user.image : '/default-user.png'} alt="user" />
+              <span>{ user && user.name }</span>
+            </li>
+          }
         </ul>
+        <div className={styles.switchWrapper}>
+          <Switch />
+        </div>
       </nav>
-      <div className={styles.switchWrapper}>
-        <Switch />
-      </div>
     </>
   );
 }
