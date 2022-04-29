@@ -189,7 +189,15 @@ export default function CreateProject({ modalsEvents }) {
             <Button onClick={() => addField()} type="button" className="fal fa-plus" />
           </div>
           <div className={styles.customFilesContainer}>
-            { customFields }
+          {
+            removedFields.length === 5
+            ? (
+              <div className={styles.customFileWrapper}>
+                <h6>Add Your Custom Fields <Button onClick={() => addField()} type="button" className="fal fa-plus" /></h6> 
+              </div>
+            )
+            : customFields 
+          }
           </div>
           <div className={styles.buttonsContainer}>
             <Button onClick={() => closeModal()} type="button" caption="Cancel" />

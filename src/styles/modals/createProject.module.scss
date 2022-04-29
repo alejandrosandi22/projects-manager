@@ -10,12 +10,12 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 5rem;
+    top: 1rem;
     margin: 0 auto;
     padding: 2rem 2rem 3rem 2rem;
     width: 35rem;
     min-height: 20rem;
-    max-height: 40rem;
+    max-height: 43rem;
     background: var(--primary);
     display: flex;
     justify-content: space-between;
@@ -71,13 +71,34 @@
         padding: 0 2rem 0 0;
       }
       .customFilesContainer {
+        position: relative;
         width: 35rem;
-        height: 12rem;
+        height: 15rem;
         margin: 1rem 0;
         overflow-y: scroll;
         .customFileWrapper {
           display: flex;
           margin: 2rem 0;
+          &:first-child {
+            margin: 0 0;
+          }
+          h6 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--color);
+            font-size: 1.3rem;
+            button {
+              margin: 1.5rem;
+              width: 3.5rem;
+            }
+          }
           div {
             width: 80%;
           }
